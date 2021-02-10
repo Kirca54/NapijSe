@@ -11,16 +11,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class RecipesController {
+public class RecipeManipulationController {
 
     private final RecipeService recipeService;
     private final CategoryService categoryService;
 
-    public RecipesController(RecipeService recipeService,
-                             CategoryService categoryService) {
+    public RecipeManipulationController(RecipeService recipeService,
+                                        CategoryService categoryService) {
         this.recipeService = recipeService;
         this.categoryService = categoryService;
     }
+    
+    // TODO: implement search
 
     @GetMapping("/recipes")
     public String listAllRecipes(@RequestParam(required = false) String error, Model model){

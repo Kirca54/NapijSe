@@ -55,7 +55,13 @@
         </thead>
         <tbody>
         <tr th:each="recipe : ${recipes}">
-            <td th:text="${recipe.name}"></td>
+            <td>
+                <form th:action="@{'/recipes/info/{id}' (id=${recipe.id})}" th:method="GET">
+                    <button class="add-to-cart-btn" type="submit"
+                            th:text="${recipe.name}" th:value="${recipe.id}">
+                    </button>
+                </form>
+            </td>
             <td th:text="${recipe.description}"></td>
             <td th:text="${recipe.category.name}"></td>
             <td th:text="${recipe.ingredients}"></td>
