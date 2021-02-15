@@ -24,7 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomUsernamePasswordAuthenticationProvider customUsernamePasswordAuthenticationProvider;
 
-    public SecurityConfig(PasswordEncoder passwordEncoder, CustomUsernamePasswordAuthenticationProvider customUsernamePasswordAuthenticationProvider) {
+    public SecurityConfig(PasswordEncoder passwordEncoder,
+                          CustomUsernamePasswordAuthenticationProvider customUsernamePasswordAuthenticationProvider) {
         this.passwordEncoder = passwordEncoder;
         this.customUsernamePasswordAuthenticationProvider = customUsernamePasswordAuthenticationProvider;
     }
@@ -32,34 +33,55 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // TODO: If you are implementing the security requirements, remove this following line
-        web.ignoring().antMatchers("/**");
+        // web.ignoring().antMatchers("/**");
     }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//
-//        http.csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/").permitAll()
-//                .anyRequest().hasRole("ADMIN")
-//                .and()
-//                .formLogin()
-//                .failureUrl("/login?error=BadCredentials")
-//                .defaultSuccessUrl("/home", true)
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .clearAuthentication(true)
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID")
-//                .logoutSuccessUrl("/");
-//
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(this.userDetailsService);
-//    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        //http.csrf().disable()
+        //        .authorizeRequests()
+        //        .antMatchers("/").permitAll()
+        //        .anyRequest().hasRole("ADMIN")
+        //        .and()
+        //        .formLogin()
+        //        .failureUrl("/login?error=BadCredentials")
+        //        .defaultSuccessUrl("/home", true)
+        //        .and()
+        //        .logout()
+        //        .logoutUrl("/logout")
+        //        .clearAuthentication(true)
+        //        .invalidateHttpSession(true)
+        //        .deleteCookies("JSESSIONID")
+        //        .logoutSuccessUrl("/");
+
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/", "/home", "/recipes", "/register", "/recipes/info/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login").permitAll()
+                .failureUrl("/login?error=BadCredentials")
+                .defaultSuccessUrl("/home", true)
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login");
+                //.and()
+                //.exceptionHandling().accessDeniedPage("/access_denied");
+
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(this.customUsernamePasswordAuthenticationProvider);
+    }
 
 
 }
