@@ -66,7 +66,7 @@
             <td th:text="${recipe.category.name}"></td>
             <td th:text="${recipe.ingredients}"></td>
             <td th:text="${recipe.datePosted}"></td>
-            <td th:text="${recipe.createdBy}"></td>
+            <td th:text="${recipe.recipeUser.username}"></td>
             <td class="text-right">
                 <form action="/recipes/add-to-favourites" th:method="POST">
                     <input type="text" name="color" th:value="${recipe.id}" hidden>

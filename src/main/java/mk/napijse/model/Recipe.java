@@ -3,7 +3,8 @@ package mk.napijse.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 @Data
 @Entity
@@ -19,21 +20,21 @@ public class Recipe {
 
     private String ingredients;
 
-    private LocalDateTime datePosted;
+    private Date datePosted;
 
     @ManyToOne
-    private User createdBy;
+    private User recipeUser;
 
     @ManyToOne
     private Category category;
 
-    public Recipe(String name, String description, String ingredients, User createdBy, Category category) {
+    public Recipe(String name, String description, String ingredients, User recipeUser, Category category) {
         this.name = name;
         this.description = description;
         this.ingredients = ingredients;
-        this.createdBy = createdBy;
+        this.recipeUser = recipeUser;
         this.category = category;
-        this.datePosted = LocalDateTime.now();
+        this.datePosted = Calendar.getInstance().getTime();
     }
 
     public Recipe() {

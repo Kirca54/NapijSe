@@ -10,5 +10,5 @@ public interface RecipeService {
     void deleteById(Long id);
     Optional<Recipe> findById(Long id);
     Recipe editRecipe(Long id, String name, String description, String ingredients, Long category);
-    Recipe saveRecipe (String name, String description, String ingredients, Long category);
+    Recipe saveRecipe (String name, String description, String ingredients, Long category, String username);
 }

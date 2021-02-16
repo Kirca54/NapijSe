@@ -2,10 +2,12 @@ package mk.napijse.service.impl;
 
 import mk.napijse.model.Category;
 import mk.napijse.model.Recipe;
+import mk.napijse.model.User;
 import mk.napijse.model.exceptions.CategoryNotFoundException;
 import mk.napijse.model.exceptions.RecipeNotFoundException;
 import mk.napijse.repository.CategoryRepository;
 import mk.napijse.repository.RecipeRepository;
+import mk.napijse.repository.UserRepository;
 import mk.napijse.service.RecipeService;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,14 @@ public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
     public RecipeServiceImpl(RecipeRepository recipeRepository,
-                             CategoryRepository categoryRepository) {
+                             CategoryRepository categoryRepository,
+                             UserRepository userRepository) {
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -52,9 +57,10 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe saveRecipe(String name, String description, String ingredients, Long categoryId) {
+    public Recipe saveRecipe(String name, String description, String ingredients, Long categoryId, String username) {
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
-        Recipe recipe = new Recipe(name, description, ingredients, null, category);
+        User currentUser = this.userRepository.findByUsername(username).get();
+        Recipe recipe = new Recipe(name, description, ingredients, currentUser, category);
         return this.recipeRepository.save(recipe);
     }
 }

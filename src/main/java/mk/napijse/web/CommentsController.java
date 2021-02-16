@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+
 @Controller
 public class CommentsController {
 
@@ -20,9 +23,11 @@ public class CommentsController {
 
     @PostMapping("/add-comment/{recipeId}")
     public String addComment(@PathVariable Long recipeId,
-                             @RequestParam String content){
-        //TODO: get user from session
-        this.commentService.save(recipeId, null, content);
+                             @RequestParam String content,
+                             HttpServletRequest request){
+        Principal principal = request.getUserPrincipal();
+        String username = principal.getName();
+        this.commentService.save(recipeId, username, content);
         return "redirect:/recipes/info/" + recipeId;
     }
 }

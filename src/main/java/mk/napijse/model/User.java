@@ -29,7 +29,7 @@ public class User implements UserDetails {
     @ManyToMany
     private List<Recipe> favourites;
 
-    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "recipeUser", fetch = FetchType.EAGER)
     private List<Recipe> recipes;
 
     private boolean isAccountNonExpired = true;

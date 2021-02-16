@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -77,9 +79,11 @@ public class RecipeManipulationController {
             @RequestParam String name,
             @RequestParam String description,
             @RequestParam String ingredients,
-            @RequestParam Long category) {
-
-        this.recipeService.saveRecipe(name, description, ingredients, category);
+            @RequestParam Long category,
+            HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        String username = principal.getName();
+        this.recipeService.saveRecipe(name, description, ingredients, category, username);
         return "redirect:/recipes";
     }
 }

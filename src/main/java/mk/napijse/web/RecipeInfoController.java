@@ -28,7 +28,6 @@ public class RecipeInfoController {
                                         Model model){
         if (this.recipeService.findById(id).isPresent()){
             Recipe recipe = this.recipeService.findById(id).get();
-            //TODO: by recipe and user
             List<Comment> comments = this.commentService.findAllByRecipe(id);
 
             model.addAttribute("comments", comments);
