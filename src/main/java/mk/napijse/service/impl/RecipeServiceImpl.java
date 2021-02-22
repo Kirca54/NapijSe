@@ -9,6 +9,7 @@ import mk.napijse.repository.CategoryRepository;
 import mk.napijse.repository.RecipeRepository;
 import mk.napijse.repository.UserRepository;
 import mk.napijse.service.RecipeService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -62,5 +63,35 @@ public class RecipeServiceImpl implements RecipeService {
         User currentUser = this.userRepository.findByUsername(username).get();
         Recipe recipe = new Recipe(name, description, ingredients, currentUser, category);
         return this.recipeRepository.save(recipe);
+    }
+
+    @Override
+    public List<Recipe> findAllFavourites(String username) {
+        User user = this.userRepository
+                .findByUsername(username)
+                .orElseThrow(()->new UsernameNotFoundException(username));
+
+        return this.userRepository.findByUsername(username).get().getFavourites();
+    }
+
+    @Override
+    public Recipe addToFavourites(String username, Long recipeId) {
+        User user = this.userRepository
+                .findByUsername(username)
+                .orElseThrow(()->new UsernameNotFoundException(username));
+        Recipe recipe = this.recipeRepository.findById(recipeId).orElseThrow(RecipeNotFoundException::new);
+        user.addToFavourites(recipe);
+        this.userRepository.save(user);
+        return recipe;
+    }
+
+    @Override
+    public void deleteFromFavourites(String username, Long recipeId) {
+        User user = this.userRepository
+                .findByUsername(username)
+                .orElseThrow(()->new UsernameNotFoundException(username));
+        Recipe recipe = this.recipeRepository.findById(recipeId).orElseThrow(RecipeNotFoundException::new);
+        user.deleteFromFavourites(recipe);
+        this.userRepository.save(user);
     }
 }

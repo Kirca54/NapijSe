@@ -11,4 +11,7 @@ public interface RecipeService {
     Optional<Recipe> findById(Long id);
     Recipe editRecipe(Long id, String name, String description, String ingredients, Long category);
     Recipe saveRecipe (String name, String description, String ingredients, Long category, String username);
+    List<Recipe> findAllFavourites(String username);
+    Recipe addToFavourites(String username, Long recipeId);
+    void deleteFromFavourites(String username, Long recipeId);
 }

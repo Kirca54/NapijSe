@@ -49,6 +49,14 @@ public class User implements UserDetails {
     public User() {
     }
 
+    public void addToFavourites(Recipe recipe){
+        this.favourites.add(recipe);
+    }
+
+    public void deleteFromFavourites(Recipe recipe){
+        this.favourites.remove(recipe);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(role);

@@ -17,37 +17,37 @@
 
 <div class="container mb-4">
     <div class="row">
-        <div class="col-12" th:if="${orders.size() > 0}">
+        <div class="col-12" th:if="${favourites.size() > 0}">
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">Balloon color</th>
-                        <th scope="col">Size</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Client address</th>
-                        <th scope="col">Order ID</th>
+                        <th scope="col">username</th>
+                        <th scope="col">recipe name</th>
+                        <th scope="col">action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="order-item" th:each="order : ${orders}">
-                        <td th:text="${order.getBalloonColor()}"></td>
-                        <td th:text="${order.getBalloonSize()}"></td>
-                        <td th:text="${#request.getRemoteUser() != null}
-                            ? ${#request.getRemoteUser()} : 'No client name'"></td>
-                        <td th:text="${order.getAddress() != null}
-                            ? ${order.getAddress()} : 'No address'"></td>
-                        <td th:text="${order.getId()}"></td>
+                    <tr class="order-item" th:each="recipe : ${favourites}">
+                        <td th:text="${#request.getRemoteUser()}"></td>
+                        <td th:text="${recipe.name}"></td>
+                        <td>
+                            <div>
+                                <form th:action="@{'/{username}/delete-from-favourites/{recipeId}' (username=${#request.getRemoteUser()}, recipeId=${recipe.getId()})}" th:method="POST">
+                                    <button class="delete-balloon-btn" type="submit">Delete from favourites</button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <form method="POST" action="/orders">
+        <form method="get" action="/recipes">
         <div class="col mb-3">
             <div class="row">
                 <div class="col-sm-12 col-md-12">
-                    <button type="submit" class="btn btn-block btn-dark">Home page</button>
+                    <button type="submit" class="btn btn-block btn-dark">recipes page</button>
                 </div>
             </div>
         </div>

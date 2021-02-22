@@ -50,22 +50,20 @@
                         <td th:text="${comment.datePosted}"></td>
                         <td th:text="${comment.commentUser.username}"></td>
                         <td th:text="${comment.content}"></td>
-                        <!--<td class="text-right">
-                            <form action="/recipes/add-to-favourites" th:method="POST">
-                                <input type="text" name="color" th:value="${recipe.id}" hidden>
-                                <button class="add-to-cart-btn" type="submit">Add to favourites</button>
-                            </form>
+                        <td class="text-right">
                             <div>
-                                <form th:action="@{'/recipes/delete/{id}' (id=${recipe.id})}" method="post">
+                                <form th:action="@{'/delete-comment/{recipeId}/{commentId}' (recipeId=${recipe.id}, commentId=${comment.id})}"
+                                      method="post">
                                     <button class="delete-balloon-btn" type="submit">Delete</button>
                                 </form>
                             </div>
                             <div>
-                                <form th:action="@{'/recipes/edit/{id}' (id=${recipe.id})}">
+                                <form th:action="@{'/edit-comment/{recipeId}/{commentId}' (recipeId=${recipe.id}, commentId=${comment.id})}"
+                                      method="get">
                                     <button class="edit-balloon-btn">Edit</button>
                                 </form>
                             </div>
-                        </td>-->
+                        </td>
                     </tr>
                 </tbody>
             </table>

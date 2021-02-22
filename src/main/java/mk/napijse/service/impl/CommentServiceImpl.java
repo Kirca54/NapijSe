@@ -3,6 +3,7 @@ package mk.napijse.service.impl;
 import mk.napijse.model.Comment;
 import mk.napijse.model.Recipe;
 import mk.napijse.model.User;
+import mk.napijse.model.exceptions.CommentNotFoundException;
 import mk.napijse.model.exceptions.RecipeNotFoundException;
 import mk.napijse.model.exceptions.UserNotFoundException;
 import mk.napijse.repository.CommentRepository;
@@ -53,5 +54,25 @@ public class CommentServiceImpl implements CommentService {
         User user = this.userRepository.findByUsername(username).get();
         Comment comment = new Comment(content, user, recipe);
         return this.commentRepository.save(comment);
+    }
+
+    @Override
+    public Comment edit(Long recipeId, Long commentId, String content) {
+        this.recipeRepository.findById(recipeId).orElseThrow(RecipeNotFoundException::new);
+        Comment oldComment = this.findById(commentId);
+        oldComment.setContent(content);
+        return this.commentRepository.save(oldComment);
+    }
+
+    @Override
+    public Comment findById(Long id) {
+        return this.commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
+    }
+
+    @Override
+    public void delete(Long recipeId, Long commentId) {
+        this.recipeRepository.findById(recipeId).orElseThrow(RecipeNotFoundException::new);
+        this.findById(commentId);
+        this.commentRepository.deleteById(commentId);
     }
 }

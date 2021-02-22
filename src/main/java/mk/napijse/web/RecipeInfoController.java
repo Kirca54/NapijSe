@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -25,7 +26,12 @@ public class RecipeInfoController {
 
     @GetMapping("/recipes/info/{id}")
     public String getSelectedRecipePage(@PathVariable Long id,
+                                        @RequestParam(required = false) String error,
                                         Model model){
+        if(error != null && !error.isEmpty()) {
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", error);
+        }
         if (this.recipeService.findById(id).isPresent()){
             Recipe recipe = this.recipeService.findById(id).get();
             List<Comment> comments = this.commentService.findAllByRecipe(id);

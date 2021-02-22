@@ -68,7 +68,8 @@
             <td th:text="${recipe.datePosted}"></td>
             <td th:text="${recipe.recipeUser.username}"></td>
             <td class="text-right">
-                <form action="/recipes/add-to-favourites" th:method="POST">
+                <form th:action="@{'/{username}/add-to-favourites/{recipeId}'
+                (username=${#request.getRemoteUser()}, recipeId=${recipe.id})}" th:method="POST">
                     <input type="text" name="color" th:value="${recipe.id}" hidden>
                     <button class="add-to-cart-btn" type="submit">Add to favourites</button>
                 </form>
@@ -91,8 +92,9 @@
         <button class="add-new-balloon-btn">Add new recipe</button>
     </a>
     <div>
-        <form th:action="@{/favourites}" th:method="GET">
-            <input type="submit" value="Favourites">
+        <form th:action="@{'/{username}/favourites' (username=${#request.getRemoteUser()})}" th:method="GET">
+            <!--sec:authorize="isAuthenticated()" vo input tagot-->
+            <input type="submit" value="Show favourites">
         </form>
     </div>
     <!--<div sec:authorize="isAuthenticated()">
