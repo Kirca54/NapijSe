@@ -24,7 +24,7 @@ public class DataInitializer {
 
     @PostConstruct
     public void initData() {
-        User admin = this.userService.register(ADMIN, ADMIN, ADMIN, ADMIN, ADMIN, Role.ROLE_ADMIN);
+        User admin = this.userService.register(ADMIN, ADMIN, ADMIN, "email", ADMIN, ADMIN, Role.ROLE_ADMIN);
 
         for (int i = 1; i < 6; i++) {
             this.categoryService.create("Category " + i, "Category description");
