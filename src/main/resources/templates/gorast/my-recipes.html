@@ -1,0 +1,63 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <main class="container">
+        <div th:if="${hasError}">
+            <h3 th:text="${error}"></h3>
+        </div>
+        <br>
+        <div sec:authorize="isAuthenticated()">
+            <div th:if="${#request.getRemoteUser()!=null}">
+                <h2>Рецепти на корисник:
+                    <th:block th:text="${#request.getRemoteUser()}"/>
+                </h2>
+            </div>
+        </div>
+        <!--<form class="form-signin mt-xl-5" method="post" action="/balloons/searchBalloon">
+            <label for="search" class="sr-only">Search</label>
+            <input type="text" id="search" name="search" class="form-control" placeholder="Search by color or desc" required="" autofocus="">
+            <button class="btn btn-lg btn-primary" type="submit">Search</button>
+        </form>-->
+        <div class="row" style="padding: 10px">
+            <div class="column" th:each="recipe : ${recipes}">
+                <div class="card">
+                    <form th:action="@{'/recipes/info/{id}' (id=${recipe.id})}" th:method="GET">
+                        <button class="add-to-cart-btn" type="submit"
+                                th:text="${recipe.name}" th:value="${recipe.id}">
+                        </button>
+                        <h2 th:text="${recipe.description}"></h2>
+                        <h2 th:text="${recipe.category.name}"></h2>
+                        <h2 th:text="${recipe.ingredients}"></h2>
+                        <h2 th:text="${recipe.datePosted}"></h2>
+                        <h2 th:text="${recipe.createdBy}"></h2>
+
+                    </form>
+                    <form action="/recipes/add-to-favourites" th:method="POST">
+                        <input type="text" name="color" th:value="${recipe.id}" hidden>
+                        <button class="add-to-cart-btn" type="submit">Додај во омилени</button>
+                    </form>
+                    <div>
+                        <form th:action="@{'/recipes/delete/{id}' (id=${recipe.id})}" method="post">
+                            <button class="delete-balloon-btn" type="submit">Избриши</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form th:action="@{'/recipes/edit/{id}' (id=${recipe.id})}">
+                            <button class="edit-balloon-btn">Промени</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <a href="/add-new-recipe" th:method="GET">
+            <button class="add-new-balloon-btn">Додај нова рецепта</button>
+        </a>
+        <div>
+            <form th:action="@{/favourites}" th:method="GET">
+                <input type="submit" value="Омилени">
+            </form>
+        </div>
+
+    </main>
+</th:block>
