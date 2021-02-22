@@ -23,6 +23,8 @@ public class User implements UserDetails {
     private String name;
     private String surname;
 
+    private String email;
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
@@ -37,9 +39,10 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
 
-    public User(String name, String surname, String username, String password, Role role) {
+    public User(String name, String surname, String email, String username, String password, Role role) {
         this.name = name;
         this.surname = surname;
+        this.email = email;
         this.username = username;
         this.password = password;
         this.role = role;

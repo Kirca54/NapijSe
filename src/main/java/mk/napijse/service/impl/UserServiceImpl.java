@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public User register(String username, String password, String repeatPassword, String name, String surname, Role role) {
+    public User register(String username, String password, String repeatPassword, String email, String name, String surname, Role role) {
         String encrypted = this.passwordEncoder.encode(password);
         if (username==null || username.isEmpty()  || password==null || password.isEmpty())
             throw new InvalidUsernameOrPasswordException();
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService{
         if(this.userRepository.findByUsername(username).isPresent())
             throw new UsernameAlreadyExistsException(username);
 
-        User user = new User(name, surname, username, encrypted, role);
+        User user = new User(name, surname, email, username, encrypted, role);
 
         return this.userRepository.save(user);
     }

@@ -58,6 +58,7 @@
             <th scope="col">Ingredients</th>
             <th scope="col">Date</th>
             <th scope="col">user</th>
+            <th scope="col">email</th>
             <th scope="col">Action</th>
         </tr>
         </thead>
@@ -75,6 +76,7 @@
             <td th:text="${recipe.ingredients}"></td>
             <td th:text="${recipe.datePosted}"></td>
             <td th:text="${recipe.recipeUser.username}"></td>
+            <td th:text="${recipe.recipeUser.email}"></td>
             <td class="text-right">
                 <form th:action="@{'/{username}/add-to-favourites/{recipeId}'
                 (username=${#request.getRemoteUser()}, recipeId=${recipe.id})}" th:method="POST">
