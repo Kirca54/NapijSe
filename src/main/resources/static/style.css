@@ -89,7 +89,7 @@ footer{
 #logo-bg{
     padding: 40%;
     margin: -60%;
-    background: url("../static/images/blob.svg") no-repeat;
+    background: url("images/blob.svg") no-repeat;
 }
 .blob1 {
     position: absolute;

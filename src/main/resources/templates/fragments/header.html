@@ -1,33 +1,40 @@
-<header>
+<header xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">
-                    <div id="logo-bg"><img id="logo" src="../../../../../../../../Downloads/untitled/images/napijselogocrno.png"></div>
+                    <div id="logo-bg"><img id="logo" src="../../static/images/napijselogocrno.png"/></div>
                 </a>
             </div>
             <div>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#">За Нас</a>
+                        <a th:action="@{'/about-us'}" th:method="get">За Нас</a>
                     </li>
                     <li>
-                        <a href="#">Рецепти</a>
+                        <a th:action="@{'/recipes'}" th:method="get">Рецепти</a>
                     </li>
                     <li>
-                        <a href="#">Мои Рецепти</a>
+                        <!--TODO: moi recepti-->
+                        <a sec:authorize="isAuthenticated()" th:action="" th:method="get">Мои Рецепти</a>
                     </li>
                     <li>
-                        <a href="#">ADMIN</a>
+                        <a sec:authorize="isAuthenticated()"
+                           th:action="@{'/{username}/favourites'
+                           (username=${#request.getRemoteUser()})}"
+                           th:method="get">Омилени</a>
                     </li>
                     <li>
-                        <a href="#">Регистрирај се</a>
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" href="#">ADMIN</a>
                     </li>
                     <li>
-                        <a href="#">Најава</a>
+                        <a sec:authorize="!isAuthenticated()" th:action="@{'/register'}" th:method="get">Регистрирај се</a>
                     </li>
                     <li>
-                        <a href="#">Одјави се</a>
+                        <a sec:authorize="!isAuthenticated()" th:action="@{'/login'}" th:method="get">Најава</a>
+                    </li>
+                    <li>
+                        <a sec:authorize="isAuthenticated()" href="/logout">Одјави се</a>
                     </li>
                 </ul>
             </div>
