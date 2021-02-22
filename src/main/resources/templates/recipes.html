@@ -36,11 +36,19 @@
             <th:block th:text="${#request.getRemoteUser()}"/>
         </div>
     </div>
-    <!--<form class="form-signin mt-xl-5" method="post" action="/balloons/searchBalloon">
-        <label for="search" class="sr-only">Search</label>
-        <input type="text" id="search" name="search" class="form-control" placeholder="Search by color or desc" required="" autofocus="">
+    <form class="form-signin mt-xl-5" method="post" action="/recipes/search">
+        <label for="recipeName" class="sr-only">Search</label>
+        <input type="text" id="recipeName" name="recipeName" class="form-control" placeholder="Search by recipe name" autofocus="">
+        <label>Category</label>
+        <select id="categoryId" name="categoryId" class="form-control">
+            <option value="">All categories</option>
+            <option th:each="category: ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">
+            </option>
+        </select>
         <button class="btn btn-lg btn-primary" type="submit">Search</button>
-    </form>-->
+    </form>
     <table class="table table-striped">
         <thead>
         <tr>

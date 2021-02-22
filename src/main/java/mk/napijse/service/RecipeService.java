@@ -14,4 +14,7 @@ public interface RecipeService {
     List<Recipe> findAllFavourites(String username);
     Recipe addToFavourites(String username, Long recipeId);
     void deleteFromFavourites(String username, Long recipeId);
+    List<Recipe> findAllByName(String name);
+    List<Recipe> findAllByCategory(Long categoryId);
+    List<Recipe> findAllByNameAndCategory(String name, Long categoryId);
 }

@@ -47,8 +47,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe editRecipe(Long id, String name, String description, String ingredients, Long categoryId) {
-        Category category = this.categoryRepository.findById(categoryId).get();
-
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
         Recipe oldRecipe = this.findById(id).orElseThrow(RecipeNotFoundException::new);
         oldRecipe.setName(name);
         oldRecipe.setDescription(description);
@@ -93,5 +92,22 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe recipe = this.recipeRepository.findById(recipeId).orElseThrow(RecipeNotFoundException::new);
         user.deleteFromFavourites(recipe);
         this.userRepository.save(user);
+    }
+
+    @Override
+    public List<Recipe> findAllByName(String name) {
+        return this.recipeRepository.findAllByNameContainingIgnoreCase(name);
+    }
+
+    @Override
+    public List<Recipe> findAllByCategory(Long categoryId) {
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
+        return this.recipeRepository.findAllByCategory(category);
+    }
+
+    @Override
+    public List<Recipe> findAllByNameAndCategory(String name, Long categoryId) {
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
+        return this.recipeRepository.findAllByNameContainingIgnoreCaseAndCategory(name, category);
     }
 }

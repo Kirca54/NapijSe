@@ -2,6 +2,8 @@ package mk.napijse.web;
 
 import mk.napijse.model.Category;
 import mk.napijse.model.Recipe;
+import mk.napijse.model.exceptions.CategoryNotFoundException;
+import mk.napijse.model.exceptions.RecipeNotFoundException;
 import mk.napijse.service.CategoryService;
 import mk.napijse.service.RecipeService;
 import org.springframework.stereotype.Controller;
@@ -23,8 +25,6 @@ public class RecipeManipulationController {
         this.recipeService = recipeService;
         this.categoryService = categoryService;
     }
-    
-    // TODO: implement search
 
     @GetMapping("/recipes")
     public String listAllRecipes(@RequestParam(required = false) String error, Model model){
@@ -33,6 +33,9 @@ public class RecipeManipulationController {
             model.addAttribute("error", error);
         }
         List<Recipe> recipes = this.recipeService.findAll();
+        List<Category> categories = this.categoryService.findAll();
+
+        model.addAttribute("categories", categories);
         model.addAttribute("recipes", recipes);
         return "recipes";
     }
@@ -45,7 +48,12 @@ public class RecipeManipulationController {
 
     @GetMapping("/recipes/edit/{id}")
     public String getEditRecipePage(@PathVariable Long id,
+                                    @RequestParam(required = false) String error,
                                     Model model) {
+        if (error != null && !error.isEmpty()){
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", error);
+        }
         if (this.recipeService.findById(id).isPresent()) {
             Recipe recipe = this.recipeService.findById(id).get();
             List<Category> categories = this.categoryService.findAll();
@@ -57,7 +65,7 @@ public class RecipeManipulationController {
     }
 
     @GetMapping("/add-new-recipe")
-    public String getAddProductPage(Model model) {
+    public String getAddRecipePage(Model model) {
         List<Category> categories = this.categoryService.findAll();
         model.addAttribute("categories", categories);
         return "add-recipe";
@@ -70,8 +78,12 @@ public class RecipeManipulationController {
             @RequestParam String description,
             @RequestParam String ingredients,
             @RequestParam Long category) {
-        this.recipeService.editRecipe(id, name, description, ingredients, category);
-        return "redirect:/recipes";
+        try {
+            this.recipeService.editRecipe(id, name, description, ingredients, category);
+            return "redirect:/recipes";
+        } catch (CategoryNotFoundException | RecipeNotFoundException exception){
+            return "redirect:/recipes/edit/" + id + "?error=" + exception.getMessage();
+        }
     }
 
     @PostMapping("/add-new-recipe")
