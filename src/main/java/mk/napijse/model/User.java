@@ -35,7 +35,7 @@ public class User implements UserDetails {
 //    private boolean isAccountNonLocked = true;
 //    private boolean isCredentialsNonExpired = true;
 //    private boolean isEnabled = true;
-    private boolean accountverified;
+    private boolean accountVerified;
 
     public User(String name, String surname, String email, String username, String password, Role role) {
         this.name = name;
@@ -45,6 +45,7 @@ public class User implements UserDetails {
         this.password = password;
         this.role = role;
         this.favourites = new ArrayList<>();
+        this.accountVerified = false;
     }
     @OneToMany(mappedBy = "user")
     private Set<SecureToken> tokens;
@@ -105,9 +106,9 @@ public class User implements UserDetails {
 //        return isEnabled;
 //    }
 
-    public boolean isAccountverified() {
-        return accountverified;
-    }
+//    public boolean isAccountVerified() {
+//        return accountVerified;
+//    }
 
     public String getUsername() {
         return username;
@@ -173,8 +174,8 @@ public class User implements UserDetails {
         this.recipes = recipes;
     }
 
-    public void setAccountverified(boolean accountverified) {
-        this.accountverified = accountverified;
+    public void setAccountVerified(boolean accountVerified) {
+        this.accountVerified = accountVerified;
     }
 
     public Set<SecureToken> getTokens() {
@@ -185,6 +186,6 @@ public class User implements UserDetails {
         this.tokens = tokens;
     }
     public boolean isAccountVerified() {
-        return accountverified;
+        return accountVerified;
     }
 }

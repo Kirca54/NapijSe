@@ -24,16 +24,22 @@ public class NapijseApplication {
     @Value("${email.host}")
     private String host;
 
-    @Value("${email.from}")
-    private String from;
+    @Value("${email.username}")
+    private String username;
 
-    @Value("${email.subject}")
-    private String subject;
+    @Value("${email.password}")
+    private String password;
+
+    @Value("${email.port}")
+    private Integer port;
 
     @Bean
     public JavaMailSender javaMailService() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setHost(host);
+        javaMailSender.setHost(this.host);
+        javaMailSender.setPort(this.port);
+        javaMailSender.setUsername(this.username);
+        javaMailSender.setPassword(this.password);
         return javaMailSender;
     }
 }

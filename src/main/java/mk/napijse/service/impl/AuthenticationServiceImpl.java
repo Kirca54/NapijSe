@@ -28,7 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         String encrypted = this.encoder.encode(password);
         return userRepository.findByUsernameAndPassword(username,
-                password).orElseThrow(InvalidUserCredentialsException::new);
+                encrypted).orElseThrow(InvalidUserCredentialsException::new);
     }
 
 }

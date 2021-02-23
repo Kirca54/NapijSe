@@ -34,6 +34,11 @@ public class RegisterController {
         model.addAttribute("bodyContent","register");
         return "register";
     }
+    @GetMapping("/verify")
+    public String verifyUser(@RequestParam String token){
+        userService.verifyUser(token);
+        return "login";
+    }
 
     @PostMapping
     public String register(@RequestParam String username,

@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -63,18 +62,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (customer == null) {
             throw new UsernameNotFoundException(email);
         }
-        boolean enabled = !customer.isAccountverified(); // we can use this in case we want to activate account after customer verified the account
-        UserDetails user = new User(customer.getName(),customer.getSurname(),
-                customer.getEmail(),customer.getUsername(),
-                customer.getPassword(),customer.getRole());
-
-//       = User.withUsername(customer.getEmail())
-//                .password(customer.getPassword())
-//                .disabled(customer.isLoginDisabled())
-//                .authorities(getAuthorities(customer)).build()
-//        ;
-
-        return user;
+        if(!customer.isAccountVerified()){
+            throw new RuntimeException("User is not verified");
+        }
+        return customer;
     }
 
 
@@ -89,13 +80,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameAlreadyExistsException(username);
 
         User user = new User(name, surname, email, username, encrypted, role);
-
-        return this.userRepository.save(user);
+        user = this.userRepository.save(user);
+        sendRegistrationConfirmationEmail(user);
+        return user;
     }
 
     @Override
     public boolean checkIfUserExist(String email) {
-        return userRepository.findByEmail(email)!=null ? true : false;
+        return userRepository.findByEmail(email) != null;
     }
 
     @Override
@@ -122,14 +114,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new InvalidTokenException("Token is not valid");
         }
         User user = userRepository.getOne(secureToken.getUser().getUsername());
-        if(Objects.isNull(user)){
-            return false;
-        }
-        user.setAccountverified(true);
+
+        user.setAccountVerified(true);
         userRepository.save(user); // let's same user details
 
         // we don't need invalid password now
-        //secureTokenRepository.removeToken(secureToken);
+        secureTokenRepository.removeByToken(token);
         return true;
     }
 

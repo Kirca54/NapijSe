@@ -25,7 +25,7 @@ public class SecureToken{
     private LocalDateTime expireAt;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName ="id")
+    @JoinColumn(name = "customer_username", referencedColumnName ="username")
     private User user;
 
     @Transient
