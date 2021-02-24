@@ -1,8 +1,6 @@
 package mk.napijse.service;
 
-import mk.napijse.model.Comment;
-import mk.napijse.model.Recipe;
-import mk.napijse.model.User;
+import mk.napijse.model.entities.Comment;
 
 import java.util.List;
 

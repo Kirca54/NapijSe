@@ -1,8 +1,8 @@
 package mk.napijse.service.impl;
 
-import mk.napijse.model.Category;
-import mk.napijse.model.Recipe;
-import mk.napijse.model.User;
+import mk.napijse.model.entities.Category;
+import mk.napijse.model.entities.Recipe;
+import mk.napijse.model.entities.User;
 import mk.napijse.model.exceptions.CategoryNotFoundException;
 import mk.napijse.model.exceptions.RecipeNotFoundException;
 import mk.napijse.repository.CategoryRepository;

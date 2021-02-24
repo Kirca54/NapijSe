@@ -1,7 +1,7 @@
 package mk.napijse.service.impl;
 
-import mk.napijse.model.SecureToken;
-import mk.napijse.model.User;
+import mk.napijse.model.entities.SecureToken;
+import mk.napijse.model.entities.User;
 import mk.napijse.model.context.AccountVerificationEmailContext;
 import mk.napijse.model.enumerations.Role;
 import mk.napijse.model.exceptions.*;

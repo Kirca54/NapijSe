@@ -1,9 +1,6 @@
 package mk.napijse.service.impl;
 
-import mk.napijse.model.SecureToken;
-import mk.napijse.model.User;
-import mk.napijse.model.exceptions.InvalidTokenException;
-import mk.napijse.model.exceptions.UserNotFoundException;
+import mk.napijse.model.entities.SecureToken;
 import mk.napijse.repository.SecureTokenRepository;
 import mk.napijse.service.MailVerificationService;
 import org.apache.commons.codec.binary.Base64;

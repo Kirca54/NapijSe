@@ -1,8 +1,8 @@
 package mk.napijse.service.impl;
 
-import mk.napijse.model.Comment;
-import mk.napijse.model.Recipe;
-import mk.napijse.model.User;
+import mk.napijse.model.entities.Comment;
+import mk.napijse.model.entities.Recipe;
+import mk.napijse.model.entities.User;
 import mk.napijse.model.exceptions.CommentNotFoundException;
 import mk.napijse.model.exceptions.RecipeNotFoundException;
 import mk.napijse.model.exceptions.UserNotFoundException;
@@ -10,7 +10,6 @@ import mk.napijse.repository.CommentRepository;
 import mk.napijse.repository.RecipeRepository;
 import mk.napijse.repository.UserRepository;
 import mk.napijse.service.CommentService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

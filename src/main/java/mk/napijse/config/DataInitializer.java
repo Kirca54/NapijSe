@@ -1,13 +1,5 @@
 package mk.napijse.config;
 
-import mk.napijse.model.User;
-import mk.napijse.model.enumerations.Role;
-import mk.napijse.service.CategoryService;
-import mk.napijse.service.UserService;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-
 //@Component
 //public class DataInitializer {
 //
