@@ -27,7 +27,7 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping
+    @PostMapping("/post")
     public String login(HttpServletRequest request, Model model) {
         User user = null;
         try{

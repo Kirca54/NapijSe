@@ -34,6 +34,11 @@ public class RegisterController {
         model.addAttribute("bodyContent","register");
         return "register";
     }
+    @GetMapping("/verify")
+    public String verifyUser(@RequestParam String token){
+        userService.verifyUser(token);
+        return "login";
+    }
 
     @PostMapping
     public String register(@RequestParam String username,
@@ -45,7 +50,7 @@ public class RegisterController {
                            @RequestParam Role role) {
         try{
             this.userService.register(username, password, repeatedPassword, email, name, surname, role);
-            return "redirect:/login";
+            return "verification";
         } catch (InvalidArgumentsException | PasswordsDoNotMatchException exception) {
             return "redirect:/register?error=" + exception.getMessage();
         }

@@ -4,6 +4,7 @@ package mk.napijse.service.impl;
 import mk.napijse.model.User;
 import mk.napijse.model.exceptions.InvalidArgumentsException;
 import mk.napijse.model.exceptions.InvalidUserCredentialsException;
+import mk.napijse.model.exceptions.UserNotFoundException;
 import mk.napijse.repository.UserRepository;
 import mk.napijse.service.AuthenticationService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,8 +28,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new InvalidArgumentsException();
         }
         String encrypted = this.encoder.encode(password);
-        return userRepository.findByUsernameAndPassword(username,
-                password).orElseThrow(InvalidUserCredentialsException::new);
+        //TODO: encrypted namesto password
+        User user = this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
+        if (this.encoder.matches(password, user.getPassword()))
+            return user;
+        else throw new InvalidUserCredentialsException();
+        //return userRepository.findByUsernameAndPassword(username,
+        //        password).orElseThrow(InvalidUserCredentialsException::new);
     }
 
 }

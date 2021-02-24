@@ -6,10 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Data
@@ -38,6 +35,7 @@ public class User implements UserDetails {
     private boolean isAccountNonLocked = true;
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
+    private boolean accountVerified;
 
     public User(String name, String surname, String email, String username, String password, Role role) {
         this.name = name;
@@ -47,7 +45,10 @@ public class User implements UserDetails {
         this.password = password;
         this.role = role;
         this.favourites = new ArrayList<>();
+        this.accountVerified = false;
     }
+    @OneToMany(mappedBy = "user")
+    private Set<SecureToken> tokens;
 
     public User() {
     }
@@ -64,6 +65,26 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(role);
     }
+
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return false;
+//    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -83,5 +104,88 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+//    public boolean isAccountVerified() {
+//        return accountVerified;
+//    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Recipe> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(List<Recipe> favourites) {
+        this.favourites = favourites;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
+    public void setAccountVerified(boolean accountVerified) {
+        this.accountVerified = accountVerified;
+    }
+
+    public Set<SecureToken> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(Set<SecureToken> tokens) {
+        this.tokens = tokens;
+    }
+    public boolean isAccountVerified() {
+        return accountVerified;
     }
 }
