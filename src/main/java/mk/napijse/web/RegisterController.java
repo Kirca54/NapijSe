@@ -50,7 +50,7 @@ public class RegisterController {
                            @RequestParam Role role) {
         try{
             this.userService.register(username, password, repeatedPassword, email, name, surname, role);
-            return "redirect:/login";
+            return "verification";
         } catch (InvalidArgumentsException | PasswordsDoNotMatchException exception) {
             return "redirect:/register?error=" + exception.getMessage();
         }
