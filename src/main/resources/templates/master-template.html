@@ -13,7 +13,295 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link href="../static/style.css" rel="stylesheet" />
+<!--    <link href="../static/style.css" rel="stylesheet" />-->
+    <style>
+        @media screen and (max-width: 768px) {
+            .nav > li {
+                position: relative;
+                left: 56%;
+            }
+            #logo-bg{
+                position: absolute;
+                width: 44%;
+                left: 5%;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .navbar{
+                position: absolute;
+            }
+            body{
+                margin-top: 380px !important;
+            }
+            .row .column {
+                width: 100% !important;
+            }
+            #about-title{
+                margin: 250px 10% 0 10% !important;
+            }
+            #about-text{
+                margin: -60px 10% 100px 10% !important;
+            }
+        }
+        body{
+            margin-top: 112px;
+        }
+        .navbar{
+            min-height: 112px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .navbar-default{
+            /*background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAATUlEQVQoU2OccObLfwYiACOywrPXnqFoMdaSgvPBCmEKkCVAKpDF4QpBirCZCBIDyaEoxOZUggphCmisEOZDbL6GicHDEd3HMI/BFAIAlRddIVSzaDQAAAAASUVORK5CYII=) repeat;*/
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAWklEQVQoU2O8dnL5fwYCQEzZlYERpBDEQAev7u5mAInDaAyF6AoIKgTZAFIEAnCrYRyY9TBTYIpxKkRWgGE1sinIJqNYDfMduhOwWo0vKMFufPPmDcEABxkCACeOUql/qrpvAAAAAElFTkSuQmCC) repeat;
+            /*background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAWklEQVQoU2O8tq/5PwMBIKaXycAIUghioINXl6YzgMRhNIZCdAUEFYJsACkCAbjVMA7MepgpMMU4FSIrwLAa2RRkk1GshvkO3QlYrcYXlGA3vnnzhmCAgwwBAAaCUqn6nRJjAAAAAElFTkSuQmCC) repeat;*/
+
+            border-color: #5da2d5;
+        }
+        .navbar-default .navbar-nav>li>a {
+            color: black;
+        }
+
+        .navbar-default .navbar-nav>li>a:hover{
+            color: blue;
+        }
+
+        .navbar-default .navbar-brand {
+            font-size: 1em;
+            color: black;
+            width: 5em;
+        }
+        .navbar .container{
+            margin: 30px auto;
+        }
+        .navbar-right{
+            background: linear-gradient(
+                    45deg
+                    , #ff9998b8, #f3d25096);
+            border-radius: 39% 11% 16% 11% / 28% 70% 20% 70%;
+            padding: 10px
+        }
+
+
+        footer{
+            /*background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAWklEQVQoU2O8dnL5fwYCQEzZlYERpBDEQAev7u5mAInDaAyF6AoIKgTZAFIEAnCrYRyY9TBTYIpxKkRWgGE1sinIJqNYDfMduhOwWo0vKMFufPPmDcEABxkCACeOUql/qrpvAAAAAElFTkSuQmCC) repeat;*/
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAWElEQVQoU2Nksp/0nwEK/h3MhTHBNJP9ZDifEaQQpgBZAqQCWRyuEKQIm4kgMZAcikIUe5Gcg1chzCSCJuJUiO5LrJ6BCWLzNUwM7Blk3egewlCIzcfIYgBrgUs/CrUtUwAAAABJRU5ErkJggg==) repeat;
+
+            /*background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAASUlEQVQoU2P83tHx//3FiwwgIKivD6aRAUyOEaQQJAETwFAJNQCuEKYY2VSQZhgfRSG6yciaMBRiMxkkNlgUYgsinL7GFo4gMQCuvj7YBbGtPgAAAABJRU5ErkJggg==) repeat;*/
+        }
+        .container>.row>div.mb-4{
+            background: linear-gradient(
+                    45deg
+                    , #ff9998, #f3d250);
+            border-radius: 39% 11% 16% 11% / 28% 70% 20% 70%;
+            color: black;
+        }
+        #logo{
+            /*margin-top: -20px;*/
+            width: 100%;
+        }
+        #img1{
+            width: 20%;
+        }
+        #logo-bg{
+            padding: 40%;
+            margin: -60%;
+            background: url("https://svgshare.com/i/URs.svg") no-repeat;
+        }
+        .blob1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            fill: #023F92;
+            width: 30vmax;
+            z-index: -1;
+            animation: move1 10s ease-in-out infinite;
+            transform-origin: 50% 50%;
+        }
+
+        .blob2 {
+            position: absolute;
+            top: 0;
+            right: 0;
+            fill: #023F92;
+            width: 30vmax;
+            z-index: -1;
+            animation: move2 10s ease-in-out infinite;
+            transform-origin: 50% 50%;
+        }
+        .blob3 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            fill: #023F92;
+            width: 30vmax;
+            z-index: -1;
+            animation: move3 10s ease-in-out infinite;
+            transform-origin: 50% 50%;
+        }
+
+        @keyframes move1 {
+            0%   { transform: scale(1)   translate(10px, -30px); }
+            38%  { transform: scale(0.8, 1) translate(80vw, 20vh) rotate(160deg); }
+            40%  { transform: scale(0.8, 1) translate(80vw, 20vh) rotate(160deg); }
+            78%  { transform: scale(1.3) translate(0vw, 100vh) rotate(-20deg); }
+            80%  { transform: scale(1.3) translate(0vw, 100vh) rotate(-20deg); }
+            100% { transform: scale(1)   translate(10px, -30px); }
+        }
+        @keyframes move2 {
+            0%   { transform: scale(1)   translate(-10px, -15px); }
+            38%  { transform: scale(0.8, 1) translate(-80vw, 100vh) rotate(160deg); }
+            40%  { transform: scale(0.8, 1) translate(-80vw, 100vh) rotate(160deg); }
+            78%  { transform: scale(1.3) translate(0vw, 40vh) rotate(-20deg); }
+            80%  { transform: scale(1.3) translate(0vw, 40vh) rotate(-20deg); }
+            100% { transform: scale(1)   translate(-10px, -15px); }
+        }
+        @keyframes move3 {
+            0%   { transform: scale(1)   translate(10px, -30px); }
+            38%  { transform: scale(0.8, 1) translate(80vw, 20vh) rotate(160deg); }
+            40%  { transform: scale(0.8, 1) translate(80vw, 20vh) rotate(160deg); }
+            78%  { transform: scale(1.3) translate(0vw, 50%) rotate(-20deg); }
+            80%  { transform: scale(1.3) translate(0vw, 50%) rotate(-20deg); }
+            100% { transform: scale(1)   translate(10px, -30px); }
+        }
+        #home1{
+            /*background: url("https://svgshare.com/i/URT.svg") no-repeat;*/
+            margin: 130px auto;
+        }
+        h1{
+            color: white;
+            font-size: 70px;
+            position: relative;
+            top: 40%;
+            transform: translateY(-50%);
+            text-align: -webkit-center;
+            font-variant: petite-caps;
+            font-weight: bolder;
+        }
+        h2{
+            color: white;
+            font-size: 20px;
+            position: relative;
+            text-align: -webkit-center;
+            font-variant: petite-caps;
+            font-weight: bolder;
+        }
+        body{
+            /*background: #FFB1A4;*/
+            background: linear-gradient(45deg, #ff7c67, #FFB1A4);
+            overflow-x: hidden;
+        }
+        #logo-home{
+            position: relative;
+            margin: 0 auto;
+            width: 33%;
+            display: block;
+        }
+        .footer-link{
+            color: black;
+        }
+        .home-link{
+            color: white;
+        }
+        .home-link:hover{
+            color: white;
+        }
+        .card{
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background: linear-gradient(135deg, blue, #023F92);
+            background-clip: border-box;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: 39% 61% 37% 63% / 54% 41% 59% 46% ;
+            box-shadow: 0 4px 8px 0 rgb(0 0 0);
+            margin: 8px;
+            padding: 25px;
+            /*background: url("https://svgshare.com/i/URT.svg");*/
+        }
+        .row .column{
+            width: 33%;
+        }
+        .row{
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        form{
+            text-align: center;;
+        }
+        button, input{
+            background: linear-gradient(
+                    45deg
+                    , #0101b7, #3f3fff);
+            padding: 15px;
+            border-radius: 52% 48% 30% 70% / 61% 41% 59% 39%;
+            box-shadow: none;
+            border-color: black;
+            margin: 2px;
+            color: white;
+            text-align: -webkit-center;
+            font-variant: petite-caps;
+            font-weight: bolder;
+        }
+        button:hover, input:hover{
+            background: linear-gradient(
+                    45deg
+                    , #3f3fff, #0101b7);
+        }
+        .form-control{
+            color: white !important;
+            font-size: 20px;
+            position: relative;
+            text-align: -webkit-center;
+            font-variant: petite-caps;
+            font-weight: bolder;
+
+        }
+        .center{
+            margin: 0 auto;
+        }
+        .add-form{
+            justify-content: center;
+        }
+        #about-title{
+            text-align: -webkit-left;
+            margin: 150px 10% 0 10%;
+        }
+        #about-text{
+            text-align: -webkit-left;
+            margin: 0 30% 100px 10%;
+            font-size: 2em;
+        }
+        .login{
+            display: block;
+            background: whitesmoke;
+            padding: initial;
+            font-size: 2em;
+            border-radius: 2px;
+            box-shadow: none;
+            border-color: black;
+            margin: 10px auto;
+            color: black;
+            text-align: -webkit-center;
+            font-variant: petite-caps;
+            font-weight: bolder;
+        }
+        .logo-login{
+            position: relative;
+            margin: 0 auto;
+            width: 33%;
+            display: block;
+            margin-top: 50px;
+        }
+
+    </style>
 </head>
 <body>
 <header th:replace="fragments/header.html"></header>

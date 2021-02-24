@@ -1,6 +1,6 @@
 package mk.napijse.service;
 
-import mk.napijse.model.Recipe;
+import mk.napijse.model.entities.Recipe;
 
 import java.util.List;
 import java.util.Optional;

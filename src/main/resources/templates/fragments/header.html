@@ -2,17 +2,19 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">
-                    <div id="logo-bg"><img id="logo" src="../../static/images/napijselogocrno.png"/></div>
+                <a class="navbar-brand" href="/home">
+                    <div id="logo-bg">
+                        <img id="logo" src="https://i.imgur.com/LcXI5tO.png"/>
+                    </div>
                 </a>
             </div>
             <div>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a th:action="@{'/about-us'}" th:method="get">За Нас</a>
+                        <a th:href="@{/about-us}" th:method="get">За Нас</a>
                     </li>
                     <li>
-                        <a th:action="@{'/recipes'}" th:method="get">Рецепти</a>
+                        <a th:href="@{/recipes}" th:method="get">Рецепти</a>
                     </li>
                     <li>
                         <!--TODO: moi recepti-->
@@ -20,7 +22,7 @@
                     </li>
                     <li>
                         <a sec:authorize="isAuthenticated()"
-                           th:action="@{'/{username}/favourites'
+                           th:href="@{'/{username}/favourites'
                            (username=${#request.getRemoteUser()})}"
                            th:method="get">Омилени</a>
                     </li>
@@ -28,10 +30,10 @@
                         <a sec:authorize="hasRole('ROLE_ADMIN')" href="#">ADMIN</a>
                     </li>
                     <li>
-                        <a sec:authorize="!isAuthenticated()" th:action="@{'/register'}" th:method="get">Регистрирај се</a>
+                        <a sec:authorize="!isAuthenticated()" th:href="@{'/register'}" th:method="get">Регистрирај се</a>
                     </li>
                     <li>
-                        <a sec:authorize="!isAuthenticated()" th:action="@{'/login'}" th:method="get">Најава</a>
+                        <a sec:authorize="!isAuthenticated()" th:href="@{'/login'}" th:method="get">Најава</a>
                     </li>
                     <li>
                         <a sec:authorize="isAuthenticated()" href="/logout">Одјави се</a>

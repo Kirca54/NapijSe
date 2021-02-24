@@ -1,7 +1,7 @@
 package mk.napijse.service.impl;
 
 
-import mk.napijse.model.User;
+import mk.napijse.model.entities.User;
 import mk.napijse.model.exceptions.InvalidArgumentsException;
 import mk.napijse.model.exceptions.InvalidUserCredentialsException;
 import mk.napijse.model.exceptions.UserNotFoundException;
