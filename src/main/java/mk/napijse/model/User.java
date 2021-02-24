@@ -31,10 +31,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "recipeUser", fetch = FetchType.EAGER)
     private List<Recipe> recipes;
 
-//    private boolean isAccountNonExpired = true;
-//    private boolean isAccountNonLocked = true;
-//    private boolean isCredentialsNonExpired = true;
-//    private boolean isEnabled = true;
+    private boolean isAccountNonExpired = true;
+    private boolean isAccountNonLocked = true;
+    private boolean isCredentialsNonExpired = true;
+    private boolean isEnabled = true;
     private boolean accountVerified;
 
     public User(String name, String surname, String email, String username, String password, Role role) {
@@ -66,45 +66,45 @@ public class User implements UserDetails {
         return Collections.singletonList(role);
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
-
 //    @Override
 //    public boolean isAccountNonExpired() {
-//        return isAccountNonExpired;
+//        return false;
 //    }
 //
 //    @Override
 //    public boolean isAccountNonLocked() {
-//        return isAccountNonLocked;
+//        return false;
 //    }
 //
 //    @Override
 //    public boolean isCredentialsNonExpired() {
-//        return isCredentialsNonExpired;
+//        return false;
 //    }
 //
 //    @Override
 //    public boolean isEnabled() {
-//        return isEnabled;
+//        return false;
 //    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
+    }
 
 //    public boolean isAccountVerified() {
 //        return accountVerified;

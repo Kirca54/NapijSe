@@ -78,10 +78,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new PasswordsDoNotMatchException();
         if(this.userRepository.findByUsername(username).isPresent())
             throw new UsernameAlreadyExistsException(username);
-
+        //TODO: encrypted namesto password
         User user = new User(name, surname, email, username, encrypted, role);
         user = this.userRepository.save(user);
-        sendRegistrationConfirmationEmail(user);
+        System.out.println("register "+user.getUsername());
+        System.out.println("register "+user.getPassword());
+        this.sendRegistrationConfirmationEmail(user);
         return user;
     }
 
@@ -99,6 +101,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         emailContext.init(user);
         emailContext.setToken(secureToken.getToken());
         emailContext.buildVerificationUrl(baseURL, secureToken.getToken());
+        System.out.println("send mail "+user.getUsername());
+        System.out.println("send mail "+user.getPassword());
         try {
             mailService.sendMail(emailContext);
         } catch (MessagingException e) {
@@ -117,7 +121,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         user.setAccountVerified(true);
         userRepository.save(user); // let's same user details
-
+        System.out.println("verify user "+user.getUsername());
+        System.out.println("verify user "+user.getPassword());
         // we don't need invalid password now
         secureTokenRepository.removeByToken(token);
         return true;

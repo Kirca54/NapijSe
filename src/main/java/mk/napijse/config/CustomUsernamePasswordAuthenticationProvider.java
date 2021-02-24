@@ -1,5 +1,7 @@
 package mk.napijse.config;
 
+import mk.napijse.model.User;
+import mk.napijse.service.AuthenticationService;
 import mk.napijse.service.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,10 +17,12 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationService authenticationService;
 
-    public CustomUsernamePasswordAuthenticationProvider(UserService userService, PasswordEncoder passwordEncoder) {
+    public CustomUsernamePasswordAuthenticationProvider(UserService userService, PasswordEncoder passwordEncoder, AuthenticationService authenticationService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationService = authenticationService;
     }
 
 
@@ -26,17 +30,23 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
+        System.out.println("authenticate "+username);
+        System.out.println("authenticate "+password);
+        System.out.println(this.passwordEncoder.encode(password));
 
         if ("".equals(username) || "".equals(password)) {
             throw new BadCredentialsException("Invalid Credentials");
         }
 
-        UserDetails userDetails = this.userService.loadUserByUsername(username);
+        //UserDetails userDetails = this.userService.loadUserByUsername(username);
+        //System.out.println(userDetails.getUsername());
+        User user = this.authenticationService.login(username, password);
 
-        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+        if (!this.passwordEncoder.matches(password, user.getPassword())) {
+        //if (!password.equals(user.getPassword())){
             throw new BadCredentialsException("Password is incorrect!");
         }
-        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
 
     }
 
