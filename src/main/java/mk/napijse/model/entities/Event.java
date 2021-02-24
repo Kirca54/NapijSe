@@ -18,18 +18,18 @@ public class Event {
     private LocalDateTime start;
     private LocalDateTime finish;
 
-    public Event(Long id, String title, String description, LocalDateTime start, LocalDateTime finish) {
-        super();
-        this.id = id;
+    @ManyToOne
+    private User user;
+
+    public Event(String title, String description, LocalDateTime start, LocalDateTime finish, User user) {
         this.title = title;
         this.description = description;
         this.start = start;
         this.finish = finish;
+        this.user = user;
     }
 
     public Event() {
-        super();
-        // TODO Auto-generated constructor stub
     }
 
     @Override

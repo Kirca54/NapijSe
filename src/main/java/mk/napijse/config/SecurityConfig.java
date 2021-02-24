@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // TODO: If you are implementing the security requirements, remove this following line
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/images/**");
+        web.ignoring().antMatchers("/resources/**", "/static/**", "/images/**", "/webjars/**");
     }
 
     @Override
@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/h2" ,"/home", "/recipes", "/register", "/register/verify", "/recipes/info/**", "/recipes/search", "/about-us", "/resources/**", "/static/**", "/images/**").permitAll()
+                .antMatchers("/","/h2" ,"/home", "/recipes", "/register", "/register/verify", "/recipes/info/**", "/recipes/search", "/about-us", "/resources/**", "/static/**", "/images/**", "/webjars/**").permitAll()
                 //.antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
