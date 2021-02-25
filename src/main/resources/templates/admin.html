@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div xmlns:th="http://www.thymeleaf.org">
+<h1>Admin page</h1>
+    <!-- TODO da se stilizira -->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">username</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.surname}"></td>
+            <td th:text="${user.username}"></td>
 
-</body>
-</html>
+            <td class="text-right">
+                <form th:action="@{'/make-admin/{username}'
+                (username=${user.username})}" th:method="POST">
+                    <input type="text" name="color" th:value="${user.username}" hidden>
+                    <button class="add-to-cart-btn" type="submit">Make admin</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">username</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${admins}">
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.surname}"></td>
+            <td th:text="${user.username}"></td>
+
+            <td class="text-right">
+                <form th:action="@{'/remove-admin/{username}'
+                (username=${user.username})}" th:method="POST">
+                    <input type="text" name="color" th:value="${user.username}" hidden>
+                    <button class="add-to-cart-btn" type="submit">Remove admin</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- TODO da se sredi linkov -->
+    <form th:href="@{/jsoncalendar}" method="get">
+        <button type="submit">Настани</button>
+    </form>
+</div>

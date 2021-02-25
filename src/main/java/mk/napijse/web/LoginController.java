@@ -24,7 +24,7 @@ public class LoginController {
     @GetMapping
     public String getLoginPage(Model model) {
         model.addAttribute("bodyContent","login");
-        return "login";
+        return "master-template";
     }
 
     @PostMapping("/post")
@@ -39,7 +39,9 @@ public class LoginController {
         catch (InvalidUserCredentialsException exception) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", exception.getMessage());
-            return "login";
+
+            model.addAttribute("bodyContent", "login");
+            return "master-template";
         }
     }
 }

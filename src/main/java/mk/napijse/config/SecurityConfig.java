@@ -32,7 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        // TODO: If you are implementing the security requirements, remove this following line
         web.ignoring().antMatchers("/resources/**", "/static/**",
                 "/images/**", "/webjars/**", "/**.png", "/**.jpg", "/**.svg");
     }
@@ -60,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/","/h2" ,"/home", "/recipes", "/register", "/register/verify",
                         "/recipes/info/**", "/recipes/search", "/about-us", "/webjars/**",
-                        "/**.png", "/**.jpg", "/**.svg").permitAll()
+                        "/**.png", "/**.jpg", "/**.svg", "/calendar").permitAll()
                 //.antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
@@ -76,9 +75,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/login");
-                //.and()
-                //.exceptionHandling().accessDeniedPage("/access_denied");
+                .logoutSuccessUrl("/login")
+                .and()
+                .exceptionHandling().accessDeniedPage("/access-denied");
 
     }
 

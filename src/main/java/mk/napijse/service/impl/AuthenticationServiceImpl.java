@@ -28,7 +28,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new InvalidArgumentsException();
         }
         String encrypted = this.encoder.encode(password);
-        //TODO: encrypted namesto password
         User user = this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(username));
         if (this.encoder.matches(password, user.getPassword()))

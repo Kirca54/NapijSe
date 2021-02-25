@@ -44,7 +44,9 @@ public class FavouritesController {
         }catch (UsernameNotFoundException exception){
             return "redirect:/recipes?error="+exception.getMessage();
         }
-        return "favourites";
+
+        model.addAttribute("bodyContent", "favourites");
+        return "master-template";
     }
 
     @PostMapping("/{username}/delete-from-favourites/{recipeId}")

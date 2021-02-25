@@ -1,4 +1,6 @@
 <div xmlns:th="http://www.thymeleaf.org">
+    <br>
+    <br>
     <main class="container">
         <div th:if="${hasError}">
             <h3 th:text="${error}"></h3>
@@ -31,14 +33,11 @@
                         <button class="add-to-cart-btn" type="submit"
                                 th:text="${recipe.name}" th:value="${recipe.id}">
                         </button>
-                        <h2 th:text="${recipe.description}"></h2>
                         <h2 th:text="${recipe.category.name}"></h2>
-                        <h2 th:text="${recipe.ingredients}"></h2>
-                        <h2 th:text="${recipe.datePosted}"></h2>
-                        <h2 th:text="${recipe.createdBy}"></h2>
-
+                        <h2 th:text="${#dates.format(recipe.datePosted, 'dd-MMM-yyyy')}"></h2>
                     </form>
-                    <form th:action="@{'/{username}/add-to-favourites/{recipeId}'
+                    <form sec:authorize="isAuthenticated()"
+                          th:action="@{'/{username}/add-to-favourites/{recipeId}'
                             (username=${#request.getRemoteUser()}, recipeId=${recipe.id})}"
                             th:method="POST">
                         <input type="text" name="color" th:value="${recipe.id}" hidden>
@@ -62,7 +61,7 @@
         <a sec:authorize="isAuthenticated()" href="/add-new-recipe" th:method="GET">
             <button class="add-new-balloon-btn">Додај нова рецепта</button>
         </a>
-        <div>
+        <div sec:authorize="isAuthenticated()">
             <form th:action="@{/favourites}" th:method="GET">
                 <input type="submit" value="Омилени">
             </form>

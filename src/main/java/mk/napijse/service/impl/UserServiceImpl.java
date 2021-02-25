@@ -12,7 +12,6 @@ import mk.napijse.service.MailVerificationService;
 import mk.napijse.service.UserService;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,39 +21,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private MailService mailService;
-
-    @Autowired
-    private MailVerificationService mailVerificationService;
-
-    @Autowired
-    SecureTokenRepository secureTokenRepository;
-
-
-
-
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final MailService mailService;
+    private final MailVerificationService mailVerificationService;
+    private final SecureTokenRepository secureTokenRepository;
 
     @Value("${site.base.url.https}")
     private String baseURL;
 
-
-
-
-
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder,
+                           MailService mailService,
+                           MailVerificationService mailVerificationService,
+                           SecureTokenRepository secureTokenRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.mailService = mailService;
+        this.mailVerificationService = mailVerificationService;
+        this.secureTokenRepository = secureTokenRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -68,7 +62,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return customer;
     }
 
-
     @Override
     public User register(String username, String password, String repeatPassword, String email, String name, String surname, Role role) {
         String encrypted = this.passwordEncoder.encode(password);
@@ -78,7 +71,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new PasswordsDoNotMatchException();
         if(this.userRepository.findByUsername(username).isPresent())
             throw new UsernameAlreadyExistsException(username);
-        //TODO: encrypted namesto password
         User user = new User(name, surname, email, username, encrypted, role);
         user = this.userRepository.save(user);
         System.out.println("register "+user.getUsername());
@@ -136,6 +128,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UserNotFoundException("unable to find account or account is not active");
         }
         return user;
+    }
+
+    @Override
+    public List<User> findAllRegularUsers() {
+        return this.userRepository.findAllByRole(Role.ROLE_USER);
+    }
+
+    @Override
+    public List<User> findAllAdminUsers() {
+        return this.userRepository.findAllByRole(Role.ROLE_ADMIN);
+    }
+
+    @Override
+    public User changeRole(String username, Role role) {
+        User user = this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
+        user.setRole(role);
+        return this.userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return this.userRepository.findByUsername(username);
     }
 
 

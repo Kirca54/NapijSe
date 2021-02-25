@@ -37,7 +37,9 @@ public class SearchRecipesController {
 
                 model.addAttribute("categories", categories);
                 model.addAttribute("recipes", recipes);
-                return "recipes";
+
+                model.addAttribute("bodyContent", "recipes");
+                return "master-template";
             }
             else if (recipeName==null && categoryId!=null){
                 List<Recipe> recipes = this.recipeService.findAllByCategory(categoryId);
@@ -45,7 +47,9 @@ public class SearchRecipesController {
 
                 model.addAttribute("categories", categories);
                 model.addAttribute("recipes", recipes);
-                return "recipes";
+
+                model.addAttribute("bodyContent", "recipes");
+                return "master-template";
             }
             else {
                 List<Recipe> recipes = this.recipeService.findAllByNameAndCategory(recipeName, categoryId);
@@ -53,7 +57,9 @@ public class SearchRecipesController {
 
                 model.addAttribute("categories", categories);
                 model.addAttribute("recipes", recipes);
-                return "recipes";
+
+                model.addAttribute("bodyContent", "recipes");
+                return "master-template";
             }
         }catch (CategoryNotFoundException exception){
             return "redirect:/recipes?error="+exception.getMessage();

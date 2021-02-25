@@ -3,6 +3,7 @@ package mk.napijse.web;
 import mk.napijse.model.entities.Event;
 import mk.napijse.model.exceptions.BadDateFormatException;
 import mk.napijse.service.EventService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,17 +30,20 @@ public class EventController {
     }
 
     @RequestMapping(value="/event", method=RequestMethod.POST)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Event addEvent(@RequestBody Event event) {
         Event created = eventService.save(event);
         return created;
     }
 
     @RequestMapping(value="/event", method=RequestMethod.PATCH)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Event updateEvent(@RequestBody Event event) {
         return eventService.save(event);
     }
 
     @RequestMapping(value="/event", method=RequestMethod.DELETE)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void removeEvent(@RequestBody Event event) {
         eventService.deleteEvent(event);
     }
@@ -48,8 +52,6 @@ public class EventController {
     public List<Event> getEventsInRange(@RequestParam(value = "start", required = true) String start,
                                         @RequestParam(value = "end", required = true) String end,
                                         HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
-        String username = principal.getName();
         Date startDate = null;
         Date endDate = null;
         SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-dd");
@@ -72,7 +74,7 @@ public class EventController {
         LocalDateTime endDateTime = LocalDateTime.ofInstant(endDate.toInstant(),
                 ZoneId.systemDefault());
 
-        return this.eventService.findAllByDateBetween(startDateTime, endDateTime, username);
+        return this.eventService.findAllByDateBetween(startDateTime, endDateTime);
     }
 }
 

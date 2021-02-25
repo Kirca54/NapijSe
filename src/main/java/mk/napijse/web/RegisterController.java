@@ -32,12 +32,14 @@ public class RegisterController {
             model.addAttribute("error", error);
         }
         model.addAttribute("bodyContent","register");
-        return "register";
+        return "master-template";
     }
     @GetMapping("/verify")
-    public String verifyUser(@RequestParam String token){
+    public String verifyUser(@RequestParam String token,
+                             Model model){
         userService.verifyUser(token);
-        return "login";
+        model.addAttribute("bodyContent", "login");
+        return "master-template";
     }
 
     @PostMapping
@@ -47,9 +49,11 @@ public class RegisterController {
                            @RequestParam String email,
                            @RequestParam String name,
                            @RequestParam String surname,
-                           @RequestParam Role role) {
+                           @RequestParam Role role,
+                           Model model) {
         try{
             this.userService.register(username, password, repeatedPassword, email, name, surname, role);
+            //TODO: stiliziraj verifikacija
             return "verification";
         } catch (InvalidArgumentsException | PasswordsDoNotMatchException exception) {
             return "redirect:/register?error=" + exception.getMessage();

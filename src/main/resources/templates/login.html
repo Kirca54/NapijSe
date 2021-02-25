@@ -1,81 +1,25 @@
-<th:block xmlns:th="http://www.thymeleaf.org">
-    <body>
+<div id="formContent" xmlns:th="http://www.thymeleaf.org">
+    <!-- Tabs Titles -->
 
-
-    <div id="formContent">
-        <!-- Tabs Titles -->
-
-        <!-- Icon -->
-        <div class="fadeIn first form-group">
-            <img class="logo-login" src="https://i.imgur.com/OuxCIKn.png"/>
-        </div>
-
-        <!-- Login Form -->
-        <form th:action="@{'/login/post'}" method="post">
-            <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
-            <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
-            <input type="submit" class="fadeIn fourth" value="Log In">
-        </form>
-
-        <!-- Remind Passowrd -->
-        <div id="formFooter">
-            <button class="center" style="display: block; margin-bottom: 100px;"><a class="underlineHover" href="#">Forgot
-                Password?</a></button>
-        </div>
+    <!-- Icon -->
+    <div class="fadeIn first form-group">
+        <img class="logo-login" src="https://i.imgur.com/OuxCIKn.png"/>
     </div>
 
+    <div th:if="${hasError}">
+        <h3 th:text="${error}"></h3>
+    </div>
 
-    <footer class="footer" style="min-height:200px;text-align:center;padding-top:50px;">
-        <div class="container p-4">
-            <!--Grid row-->
-            <div class="row">
-                <div class="col-lg-2 col-md-6 mb-4 mb-md-0" style="visibility: hidden">
+    <!-- Login Form -->
+    <form th:action="@{'/login/post'}" method="post">
+        <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+        <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
 
-                </div>
-                <!--Grid column-->
-                <div class="col-lg-3 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Контакт</h5>
+    <!-- Register -->
+    <div id="formFooter">
+        <button class="center" style="display: block; margin-bottom: 100px;"><a class="underlineHover" href="/register">Register here</a></button>
+    </div>
+</div>
 
-                    <p>
-                        gorast.angelovski1@gmail.com<br>
-                        https://github.com/robert-ilievski<br>
-                        https://github.com/Kirca54
-                    </p>
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-lg-2 col-md-6 mb-4 mb-md-0" style="visibility: hidden">
-
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase mb-0">Линкови</h5>
-
-                    <ul class="list-unstyled">
-                        <li>
-                            <a class="footer-link" href="#">Регистрирај се</a>
-                        </li>
-                        <li>
-                            <a class="footer-link" href="#">За нас</a>
-                        </li>
-                        <li>
-                            <a class="footer-link" href="recipes.html">Рецепти</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--Grid column-->
-            </div>
-            <!--Grid row-->
-        </div>
-        <!-- Grid container -->
-
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: #023F92; margin-top: 15px; color: black">
-            © 2020 Copyright: Gorast Angelovski
-        </div>
-    </footer>
-    </body>
-</th:block>

@@ -12,14 +12,19 @@
 
     <!-- Login Form -->
     <form th:action="@{'/register'}" method="post">
-        <input type="text" id="name" class="fadeIn first login" name="name" placeholder="име">
-        <input type="text" id="surname" class="fadeIn first login" name="surname" placeholder="презиме">
-        <input type="text" id="username" class="fadeIn second login" name="username" placeholder="корисничко име">
+        <input type="text" id="name" class="fadeIn first login" name="name" placeholder="име"
+        required="">
+        <input type="text" id="surname" class="fadeIn first login" name="surname" placeholder="презиме"
+               required="">
+        <input type="text" id="username" class="fadeIn second login" name="username" placeholder="корисничко име"
+               required="">
         <input type="text" id="email" class="fadeIn second login" name="email" placeholder="e-mail">
-        <input type="password" id="passwordReg" class="fadeIn third login" name="password" placeholder="лозинка">
-        <input type="password" id="repeatPassword" class="fadeIn fourth login" name="password" placeholder="повтори лозинка">
+        <input type="password" id="passwordReg" class="fadeIn third login" name="password" placeholder="лозинка"
+               required="">
+        <input type="password" id="repeatPassword" class="fadeIn fourth login" name="password" placeholder="повтори лозинка"
+               required="">
 
-        <input type="submit" class="fadeIn fourth" value="Register">
+        <input type="submit" class="fadeIn fourth" value="Регистрирај се">
     </form>
 
     <!-- Remind Passowrd -->
