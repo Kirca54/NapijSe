@@ -1,8 +1,11 @@
 
 
-<div class="body-content">
+<div class="body-content" xmlns:th="http://www.thymeleaf.org">
     <br>
     <div id="home1">
+        <div th:if="${#request.getRemoteUser() != null}">
+            <h1>Здраво <span th:text="${#request.getRemoteUser()}"></span>!</h1>
+        </div>
         <h1>Ти треба освежување?</h1><br>
         <h1>Одбери од <a class="home-link" href="/recipes">нашите рецепти</a></h1><br>
         <h1>или <a class="home-link" href="/add-new-recipe">сподели некоја твоја ;)</a></h1><br>
