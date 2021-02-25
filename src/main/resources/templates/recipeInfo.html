@@ -1,87 +1,66 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Recipe info</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="text-center">
+        <h1 class="jumbotron-heading">Информации за рецепта</h1>
+        <h2 th:text="${recipe.name}"></h2>
 
-</head>
-<body>
-<section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">Recipe info</h1>
+    </section>
+    <div class="card center" style="width: 70%">
+        <h2>Опис</h2>
+        <h2 th:text="${recipe.description}"></h2>
+        <h2>Категорија</h2>
+        <h2 th:text="${recipe.category.name}"></h2>
+        <h2>Состојки</h2>
+        <div th:each="ingredient : ${#strings.arraySplit(recipe.ingredients, ',')}">
+            <li th:text="${ingredient}"></li>
+        </div>
+        <h2 th:text="${recipe.datePosted}"></h2>
+
+        <h2>Креатор на рецептата</h2>
+        <h2 th:text="${recipe.recipeUser.username}"></h2>
     </div>
-</section>
-
-<div class="container mb-4">
-    <div class="row">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">Recipe name</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Ingredients</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">user</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td th:text="${recipe.name}"></td>
-                        <td th:text="${recipe.description}"></td>
-                        <td th:text="${recipe.category.name}"></td>
-                        <td th:text="${recipe.ingredients}"></td>
-                        <td th:text="${recipe.datePosted}"></td>
-                        <td th:text="${recipe.recipeUser.username}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead></thead>
-                <tbody>
-                    <tr th:each="comment : ${comments}">
-                        <td th:text="${comment.datePosted}"></td>
-                        <td th:text="${comment.commentUser.username}"></td>
-                        <td th:text="${comment.content}"></td>
-                        <td class="text-right">
-                            <div>
-                                <form th:action="@{'/delete-comment/{recipeId}/{commentId}' (recipeId=${recipe.id}, commentId=${comment.id})}"
-                                      method="post">
-                                    <button class="delete-balloon-btn" type="submit">Delete</button>
-                                </form>
-                            </div>
-                            <div>
-                                <form th:action="@{'/edit-comment/{recipeId}/{commentId}' (recipeId=${recipe.id}, commentId=${comment.id})}"
-                                      method="get">
-                                    <button class="edit-balloon-btn">Edit</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <br><br>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead></thead>
+            <tbody>
+            <tr th:each="comment : ${comments}">
+                <td th:text="${#dates.format(comment.datePosted, 'dd-MMM-yyyy')}"></td>
+                <td><h2 th:text="${comment.commentUser.username}"></h2></td>
+                <td th:text="${comment.content}"></td>
+                <td class="text-right">
+                    <div>
+                        <form th:action="@{'/recipes/delete/{id}' (id=${recipe.id})}" method="post">
+                            <button class="delete-balloon-btn" type="submit">Избриши</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form th:action="@{'/recipes/edit/{id}' (id=${recipe.id})}">
+                            <button class="edit-balloon-btn">Уреди</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div sec:authorize="!isAuthenticated()">
+        <div id="formFooter">
+            <button class="center" style="display: block; margin-bottom: 100px;"><a class="underlineHover" href="/login">Логирајте се за да коментирате</a></button>
         </div>
     </div>
-    <!-- TODO: kopce login to post a comment -->
-    <div>
+    <div sec:authorize="isAuthenticated()">
         <form th:action="@{'/add-comment/{id}' (id=${recipe.id})}" method="post">
             <div class="form-group">
-                <label for="content">Add comment</label>
+                <label for="content"><h2>Додај коментар</h2></label>
                 <input type="text"
-                       class="form-control"
+                       class="form-control center"
                        id="content"
                        name="content"
                        required
-                       placeholder="Enter comment">
+                       placeholder="Внеси коментар"
+                       style="height: 200px; width: 60%">
             </div>
-            <button type="submit" class="btn btn-block btn-dark">Post comment</button>
+            <button type="submit" class="btn btn-block btn-dark center" style="width: 60%">Постави коментар</button>
         </form>
     </div>
 
@@ -91,11 +70,69 @@
         <div class="col mb-3">
             <div>
                 <div class="col-sm-12 col-md-12">
-                    <button type="submit" class="btn btn-block btn-dark">Recipes page</button>
+                    <button type="submit" class="btn btn-block btn-dark center" style="width: 60%">Назад кон рецепти
+                    </button>
                 </div>
             </div>
         </div>
     </form>
+    <!--<div class="container mb-4">-->
+    <!--    <div class="row">-->
+    <!--        <div class="table-responsive">-->
+    <!--            <table class="table table-striped">-->
+    <!--                <thead>-->
+    <!--                <tr>-->
+    <!--                    <th scope="col">Име на рецепта</th>-->
+    <!--                    <th scope="col">Објаснување</th>-->
+    <!--                    <th scope="col">Категорија</th>-->
+    <!--                    <th scope="col">Состојки</th>-->
+    <!--                    <th scope="col">Дата</th>-->
+    <!--                    <th scope="col">Корисник</th>-->
+    <!--                </tr>-->
+    <!--                </thead>-->
+    <!--                <tbody>-->
+    <!--                <tr>-->
+    <!--                    <td th:text="${recipe.name}"></td>-->
+    <!--                    <td th:text="${recipe.description}"></td>-->
+    <!--                    <td th:text="${recipe.category.name}"></td>-->
+    <!--                    <td th:text="${recipe.ingredients}"></td>-->
+    <!--                    <td th:text="${recipe.datePosted}"></td>-->
+    <!--                    &lt;!&ndash; TODO: display creator username &ndash;&gt;-->
+    <!--                    <td>No recipe creator</td>-->
+    <!--                </tr>-->
+    <!--                </tbody>-->
+    <!--            </table>-->
+    <!--        </div>-->
+    <!--        <div class="table-responsive">-->
+    <!--            <table class="table table-striped">-->
+    <!--                <thead></thead>-->
+    <!--                <tbody>-->
+    <!--                <tr th:each="comment : ${comments}">-->
+    <!--                    <td th:text="${comment.datePosted}"></td>-->
+    <!--                    &lt;!&ndash; TODO: display comment username &ndash;&gt;-->
+    <!--                    <td>Коментар од(корисничко име)</td>-->
+    <!--                    <td th:text="${comment.content}"></td>-->
+    <!--                    &lt;!&ndash;<td class="text-right">-->
+    <!--                        <form action="/recipes/add-to-favourites" th:method="POST">-->
+    <!--                            <input type="text" name="color" th:value="${recipe.id}" hidden>-->
+    <!--                            <button class="add-to-cart-btn" type="submit">Add to favourites</button>-->
+    <!--                        </form>-->
+    <!--                        <div>-->
+    <!--                            <form th:action="@{'/recipes/delete/{id}' (id=${recipe.id})}" method="post">-->
+    <!--                                <button class="delete-balloon-btn" type="submit">Delete</button>-->
+    <!--                            </form>-->
+    <!--                        </div>-->
+    <!--                        <div>-->
+    <!--                            <form th:action="@{'/recipes/edit/{id}' (id=${recipe.id})}">-->
+    <!--                                <button class="edit-balloon-btn">Edit</button>-->
+    <!--                            </form>-->
+    <!--                        </div>-->
+    <!--                    </td>&ndash;&gt;-->
+    <!--                </tr>-->
+    <!--                </tbody>-->
+    <!--            </table>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    -->
+    <!--</div>-->
 </div>
-</body>
-</html>
