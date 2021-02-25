@@ -2,7 +2,9 @@ package mk.napijse.web;
 
 import mk.napijse.model.entities.Comment;
 import mk.napijse.model.entities.Recipe;
+import mk.napijse.model.entities.User;
 import mk.napijse.model.enumerations.Role;
+import mk.napijse.model.exceptions.UserNotFoundException;
 import mk.napijse.repository.UserRepository;
 import mk.napijse.service.CommentService;
 import mk.napijse.service.RecipeService;
@@ -41,7 +43,7 @@ public class RecipeInfoController {
                     this.userRepository.findByUsername(username).get().getRole().equals(Role.ROLE_ADMIN))
                 model.addAttribute("isAdmin", true);
             else model.addAttribute("isAdmin", false);
-        }
+        } else model.addAttribute("isAdmin", false);
         if(error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
@@ -54,9 +56,27 @@ public class RecipeInfoController {
             model.addAttribute("recipe", recipe);
 
             model.addAttribute("bodyContent", "recipeInfo");
-            return "recipeInfo";
+            return "master-template";
         }
 
         return "redirect:/recipes?error=RecipeNotFound";
+    }
+
+    @GetMapping("/{username}/recipes")
+    public String getOnesRecipes(@PathVariable String username,
+                                 Model model){
+        try {
+            User user = this.userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+            List<Recipe> recipes = this.recipeService.findAllByRecipeUser(username);
+
+            model.addAttribute("user", user);
+            model.addAttribute("recipes", recipes);
+
+            model.addAttribute("bodyContent", "my-recipes");
+
+            return "master-template";
+        }catch (UserNotFoundException exception){
+            return "redirect:/recipes?error="+exception.getMessage();
+        }
     }
 }

@@ -17,4 +17,5 @@ public interface RecipeService {
     List<Recipe> findAllByName(String name);
     List<Recipe> findAllByCategory(Long categoryId);
     List<Recipe> findAllByNameAndCategory(String name, Long categoryId);
+    List<Recipe> findAllByRecipeUser(String username);
 }

@@ -12,18 +12,16 @@
                 <div class="form-group">
                     <label for="content">Comment content</label>
                     <input type="text"
-                           class="form-control"
+                           class="login center"
                            id="content"
                            name="content"
                            th:value="(${comment} != null ? ${comment.content} : '')"
                            required
-                           placeholder="Enter recipe description">
+                           placeholder="Внеси коментар">
                 </div>
                 <button id="submit" type="submit" class="btn btn-primary">Submit</button>
             </form>
-            <button type="submit" class="btn btn-primary"
-               th:action="@{'/recipes/info/{id}' (id=${recipeId})}"
-               th:method="get">Back</button>
+            <a class="btn btn-danger" href="javascript:history.back()">Назад</a>
         </div>
     </div>
 </div>

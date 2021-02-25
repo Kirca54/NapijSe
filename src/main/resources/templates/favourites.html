@@ -1,5 +1,4 @@
 <main class="container" xmlns:th="http://www.thymeleaf.org">
-    <!--TODO da se stilizira -->
     <div th:if="${hasError}">
         <h3 th:text="${error}"></h3>
     </div>
@@ -24,13 +23,13 @@
                             th:text="${recipe.name}" th:value="${recipe.id}">
                     </button>
                     <h2 th:text="${recipe.category.name}"></h2>
-                    <h2 th:text="${recipe.datePosted}"></h2>
+                    <h2 th:text="${#dates.format(recipe.datePosted, 'dd-MMM-yyyy')}"></h2>
                 </form>
-                <div>
-                    <form th:action="@{'/{username}/delete-from-favourites/{recipeId}'
-                    (username=${#request.getRemoteUser()}, id=${recipe.id})}" method="post">
+                <div> <!-- TODO da se sredi linkov -->
+                    <a th:href="@{'/{username}/delete-from-favourites/{recipeId}'
+                    (username=${#request.getRemoteUser()}, id=${recipe.id})}" th:method="post">
                         <button class="delete-balloon-btn" type="submit">Избриши од омилени</button>
-                    </form>
+                    </a>
                 </div>
             </div>
         </div>

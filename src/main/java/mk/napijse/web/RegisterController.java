@@ -53,7 +53,7 @@ public class RegisterController {
                            Model model) {
         try{
             this.userService.register(username, password, repeatedPassword, email, name, surname, role);
-            //TODO: stiliziraj verifikacija
+            //TODO master template za verifikacija ili mozebi nema potreba - ke odlucime zaedno
             return "verification";
         } catch (InvalidArgumentsException | PasswordsDoNotMatchException exception) {
             return "redirect:/register?error=" + exception.getMessage();

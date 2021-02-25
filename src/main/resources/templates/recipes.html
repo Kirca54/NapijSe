@@ -13,18 +13,22 @@
                 </h2>
             </div>
         </div>
+
+        <!-- TODO da se stilizira searchot, mozebi -->
+
         <form class="form-signin mt-xl-5" method="post" action="/recipes/search">
-            <label for="recipeName" class="sr-only">Search</label>
-            <input type="text" id="recipeName" name="recipeName" class="form-control" placeholder="Search by recipe name" autofocus="">
-            <label>Category</label>
-            <select id="categoryId" name="categoryId" class="form-control">
-                <option value="">All categories</option>
-                <option th:each="category: ${categories}"
+            <label for="recipeName" class="sr-only">Пребарај</label>
+            <input type="text" id="recipeName" name="recipeName" class="fadeIn first login"
+                   placeholder="Внеси име на рецепт" autofocus="">
+            <label>Категорија</label>
+            <select id="categoryId" name="categoryId" class="fadeIn first login">
+                <option style="color: black" value="">Сите категории</option>
+                <option style="color: black" th:each="category: ${categories}"
                         th:value="${category.id}"
                         th:text="${category.name}">
                 </option>
             </select>
-            <button class="btn btn-lg btn-primary" type="submit">Search</button>
+            <button class="btn btn-lg btn-primary" type="submit">Пребарај</button>
         </form>
         <div class="row" style="padding: 10px">
             <div class="column" th:each="recipe : ${recipes}">
@@ -61,74 +65,5 @@
         <a sec:authorize="isAuthenticated()" href="/add-new-recipe" th:method="GET">
             <button class="add-new-balloon-btn">Додај нова рецепта</button>
         </a>
-        <div sec:authorize="isAuthenticated()">
-            <form th:action="@{/favourites}" th:method="GET">
-                <input type="submit" value="Омилени">
-            </form>
-        </div>
-        <!--    <table class="table table-striped">-->
-        <!--        <thead>-->
-        <!--        <tr>-->
-        <!--            <th scope="col">Recipe name</th>-->
-        <!--            <th scope="col">Description</th>-->
-        <!--            <th scope="col">Category</th>-->
-        <!--            <th scope="col">Ingredients</th>-->
-        <!--            <th scope="col">Date</th>-->
-        <!--            <th scope="col">user</th>-->
-        <!--            <th scope="col">Action</th>-->
-        <!--        </tr>-->
-        <!--        </thead>-->
-        <!--        <tbody>-->
-        <!--        <tr th:each="recipe : ${recipes}">-->
-        <!--            <td>-->
-        <!--                <form th:action="@{'/recipes/info/{id}' (id=${recipe.id})}" th:method="GET">-->
-        <!--                    <button class="add-to-cart-btn" type="submit"-->
-        <!--                            th:text="${recipe.name}" th:value="${recipe.id}">-->
-        <!--                    </button>-->
-        <!--                </form>-->
-        <!--            </td>-->
-        <!--            <td th:text="${recipe.description}"></td>-->
-        <!--            <td th:text="${recipe.category.name}"></td>-->
-        <!--            <td th:text="${recipe.ingredients}"></td>-->
-        <!--            <td th:text="${recipe.datePosted}"></td>-->
-        <!--            <td th:text="${recipe.createdBy}"></td>-->
-        <!--            <td class="text-right">-->
-        <!--                <form action="/recipes/add-to-favourites" th:method="POST">-->
-        <!--                    <input type="text" name="color" th:value="${recipe.id}" hidden>-->
-        <!--                    <button class="add-to-cart-btn" type="submit">Add to favourites</button>-->
-        <!--                </form>-->
-        <!--                <div>-->
-        <!--                    <form th:action="@{'/recipes/delete/{id}' (id=${recipe.id})}" method="post">-->
-        <!--                        <button class="delete-balloon-btn" type="submit">Delete</button>-->
-        <!--                    </form>-->
-        <!--                </div>-->
-        <!--                <div>-->
-        <!--                    <form th:action="@{'/recipes/edit/{id}' (id=${recipe.id})}">-->
-        <!--                        <button class="edit-balloon-btn">Edit</button>-->
-        <!--                    </form>-->
-        <!--                </div>-->
-        <!--            </td>-->
-        <!--        </tr>-->
-        <!--        </tbody>-->
-        <!--    </table>-->
-        <!--    <br>-->
-        <!--    <a href="/add-new-recipe" th:method="GET">-->
-        <!--        <button class="add-new-balloon-btn">Add new recipe</button>-->
-        <!--    </a>-->
-        <!--    <div>-->
-        <!--        <form th:action="@{/favourites}" th:method="GET">-->
-        <!--            <input type="submit" value="Favourites">-->
-        <!--        </form>-->
-        <!--    </div>-->
-        <!--<div sec:authorize="isAuthenticated()">
-            <form th:action="@{/logout}" th:method="GET">
-                <input type="submit" value="Logout">
-            </form>
-        </div>
-        <div sec:authorize="!isAuthenticated()">
-            <form th:action="@{/login}" th:method="GET">
-                <input type="submit" value="Login">
-            </form>
-        </div>-->
     </main>
 </div>

@@ -1,6 +1,6 @@
 <div xmlns:th="http://www.thymeleaf.org">
 <h1>Admin page</h1>
-    <!-- TODO da se stilizira -->
+    <!-- TODO da se stilizira admin stranata -->
     <table class="table table-striped">
         <thead>
         <tr>
@@ -52,8 +52,5 @@
         </tr>
         </tbody>
     </table>
-    <!-- TODO da se sredi linkov -->
-    <form th:href="@{/jsoncalendar}" method="get">
-        <button type="submit">Настани</button>
-    </form>
+    <a th:href="@{/jsoncalendar}" th:method="get">Уреди настани</a>
 </div>

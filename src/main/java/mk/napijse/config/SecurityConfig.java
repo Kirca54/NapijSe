@@ -58,9 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/","/h2" ,"/home", "/recipes", "/register", "/register/verify",
-                        "/recipes/info/**", "/recipes/search", "/about-us", "/webjars/**",
-                        "/**.png", "/**.jpg", "/**.svg", "/calendar").permitAll()
-                //.antMatchers("/admin/**").hasRole("ADMIN")
+                        "/recipes/info/**", "/recipes/search", "/about-us", "/**/recipes").permitAll()
+                .antMatchers("/event").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()

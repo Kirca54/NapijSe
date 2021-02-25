@@ -10,7 +10,7 @@
                     <div class="form-group">
                         <label for="name"><h2>Име на рецепта</h2></label>
                         <input type="text"
-                               class="form-control"
+                               class="fadeIn first login"
                                id="name"
                                name="name"
                                th:value="(${recipe} != null ? ${recipe.name} : '')"
@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label for="description"><h2>Објаснување на рецепта</h2></label>
                         <input type="text"
-                               class="form-control"
+                               class="fadeIn first login"
                                id="description"
                                name="description"
                                th:value="(${recipe} != null ? ${recipe.description} : '')"
@@ -31,7 +31,7 @@
                     <div class="form-group">
                         <label for="ingredients"><h2>Состојки на рецептата, разделени со запирка</h2></label>
                         <input type="text"
-                               class="form-control"
+                               class="fadeIn first login"
                                id="ingredients"
                                name="ingredients"
                                th:value="(${recipe} != null ? ${recipe.ingredients} : '')"
@@ -40,15 +40,15 @@
                     </div>
                     <div class="form-group">
                         <label><h2>Категорија</h2></label>
-                        <select id="category" name="category" class="form-control">
-                            <option th:if="${recipe} != null"
+                        <select id="category" name="category" class="fadeIn first login">
+                            <option style="color: black" th:if="${recipe} != null"
                                     th:selected="${recipe.category != null &&
                                 recipe.category.id == cat.id}"
                                     th:each="cat: ${categories}"
                                     th:value="${cat.id}"
                                     th:text="${cat.name}">
                             </option>
-                            <option th:if="${recipe} == null"
+                            <option style="color: black" th:if="${recipe} == null"
                                     th:each="cat: ${categories}"
                                     th:value="${cat.id}"
                                     th:text="${cat.name}">

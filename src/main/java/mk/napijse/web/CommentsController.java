@@ -58,7 +58,7 @@ public class CommentsController {
                 model.addAttribute("comment", comment);
 
                 model.addAttribute("bodyContent", "edit-comment");
-                return "edit-comment";
+                return "master-template";
             }
             return "redirect:/recipes/info/"+recipeId + "?error=You can't edit other user's comment";
         }catch (CommentNotFoundException exception){

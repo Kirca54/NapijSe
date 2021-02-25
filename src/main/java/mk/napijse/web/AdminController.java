@@ -34,7 +34,7 @@ public class AdminController {
         model.addAttribute("bodyContent", "admin");
         model.addAttribute("users", users);
         model.addAttribute("admins", admins);
-        return "admin";
+        return "master-template";
     }
 
     @PostMapping("/make-admin/{username}")

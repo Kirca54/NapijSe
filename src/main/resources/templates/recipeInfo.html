@@ -1,12 +1,16 @@
 <div xmlns:th="http://www.thymeleaf.org">
+    <br>
+    <br>
+    <br>
     <section class="text-center">
-        <h1 class="jumbotron-heading">Информации за рецепта</h1>
-        <h2 th:text="${recipe.name}"></h2>
+        <h1 class="jumbotron-heading">Информации за рецептот</h1>
+        <h1 th:text="${recipe.name}"></h1>
         <div th:if="${hasError}">
             <h3 th:text="${error}"></h3>
         </div>
     </section>
-
+    <!-- TODO levo da bidat informaciite za receptot - sostojki, datum, korisnik koj go postavil, kategorija a desno da bide
+                opisot - toa e ustvari nacinot na podgotovka -->
     <div class="card center" style="width: 70%">
         <h2>Опис</h2>
         <h3 th:text="${recipe.description}"></h3>
@@ -16,10 +20,14 @@
         <div th:each="ingredient : ${#strings.arraySplit(recipe.ingredients, ',')}">
             <h3 th:text="${ingredient}"></h3>
         </div>
-        <h2 th:text="${recipe.datePosted}"></h2>
+        <h2 th:text="${#dates.format(recipe.datePosted, 'dd-MMM-yyyy')}"></h2>
 
         <h2>Креатор на рецептата</h2>
-        <h3 th:text="${recipe.recipeUser.username}"></h3>
+        <h3>
+            <a th:text="${recipe.recipeUser.username}"
+               th:href="@{'/{username}/recipes' (username=${recipe.recipeUser.username})}"
+               th:method="get"></a>
+        </h3>
     </div>
     <br><br>
     <div class="table-responsive">
@@ -28,17 +36,21 @@
             <tbody>
             <tr th:each="comment : ${comments}">
                 <td th:text="${#dates.format(comment.datePosted, 'dd-MMM-yyyy')}"></td>
-                <td th:text="${comment.commentUser.username}"></td>
+                <td>
+                    <a th:href="@{'/{username}/recipes' (username=${comment.commentUser.username})}"
+                       th:method="get"
+                       th:text="${comment.commentUser.username}">
+                    </a>
+                </td>
                 <td th:text="${comment.content}"></td>
                 <td class="text-right">
-                    <!-- TODO dodadi boolean isAdmin vo th if -->
-                    <div th:if="${comment.commentUser.username == #request.getRemoteUser()}">
+                    <div th:if="${(comment.commentUser.username == #request.getRemoteUser()) || isAdmin}">
                         <form th:action="@{'/delete-comment/{recipeId}/{commentId}'
                         (recipeId=${comment.recipe.id}, commentId=${comment.id})}" method="post">
                             <button class="delete-balloon-btn" type="submit">Избриши</button>
                         </form>
                     </div>
-                    <div th:if="${comment.commentUser.username == #request.getRemoteUser()}">
+                    <div th:if="${(comment.commentUser.username == #request.getRemoteUser()) || isAdmin}">
                         <form th:action="@{'/edit-comment/{recipeId}/{commentId}'
                         (recipeId=${comment.recipe.id}, commentId=${comment.id})}">
                             <button class="edit-balloon-btn">Уреди</button>
@@ -59,7 +71,7 @@
             <div class="form-group">
                 <label for="content"><h2>Додај коментар</h2></label>
                 <input type="text"
-                       class="form-control center"
+                       class="login center"
                        id="content"
                        name="content"
                        required
