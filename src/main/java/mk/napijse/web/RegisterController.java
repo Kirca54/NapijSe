@@ -49,12 +49,12 @@ public class RegisterController {
                            @RequestParam String email,
                            @RequestParam String name,
                            @RequestParam String surname,
-                           @RequestParam Role role,
                            Model model) {
         try{
-            this.userService.register(username, password, repeatedPassword, email, name, surname, role);
+            this.userService.register(username, password, repeatedPassword, email, name, surname, Role.ROLE_USER);
             //TODO master template za verifikacija ili mozebi nema potreba - ke odlucime zaedno
-            return "verification";
+            model.addAttribute("bodyContent", "verification");
+            return "master-template";
         } catch (InvalidArgumentsException | PasswordsDoNotMatchException exception) {
             return "redirect:/register?error=" + exception.getMessage();
         }
