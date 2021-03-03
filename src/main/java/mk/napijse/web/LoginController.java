@@ -1,6 +1,6 @@
 package mk.napijse.web;
 
-import mk.napijse.model.User;
+import mk.napijse.model.entities.User;
 import mk.napijse.model.exceptions.InvalidUserCredentialsException;
 import mk.napijse.service.AuthenticationService;
 import org.springframework.stereotype.Controller;

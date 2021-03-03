@@ -1,4 +1,4 @@
-package mk.napijse.model;
+package mk.napijse.model.entities;
 
 import lombok.Data;
 

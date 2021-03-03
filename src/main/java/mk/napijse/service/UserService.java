@@ -1,6 +1,6 @@
 package mk.napijse.service;
 
-import mk.napijse.model.User;
+import mk.napijse.model.entities.User;
 import mk.napijse.model.enumerations.Role;
 import mk.napijse.model.exceptions.InvalidTokenException;
 import mk.napijse.model.exceptions.UserNotFoundException;

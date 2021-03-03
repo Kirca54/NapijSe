@@ -1,6 +1,6 @@
 package mk.napijse.service.impl;
 
-import mk.napijse.model.Category;
+import mk.napijse.model.entities.Category;
 import mk.napijse.repository.CategoryRepository;
 import mk.napijse.service.CategoryService;
 import org.springframework.stereotype.Service;

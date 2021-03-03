@@ -1,7 +1,7 @@
 package mk.napijse.repository;
 
-import mk.napijse.model.Category;
-import mk.napijse.model.Recipe;
+import mk.napijse.model.entities.Category;
+import mk.napijse.model.entities.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

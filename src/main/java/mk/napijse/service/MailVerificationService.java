@@ -1,9 +1,6 @@
 package mk.napijse.service;
 
-import mk.napijse.model.SecureToken;
-import mk.napijse.model.User;
-import mk.napijse.model.exceptions.InvalidTokenException;
-import mk.napijse.model.exceptions.UserNotFoundException;
+import mk.napijse.model.entities.SecureToken;
 
 public interface MailVerificationService {
     SecureToken createSecureToken();

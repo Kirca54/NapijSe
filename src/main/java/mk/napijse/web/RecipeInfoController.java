@@ -1,7 +1,7 @@
 package mk.napijse.web;
 
-import mk.napijse.model.Comment;
-import mk.napijse.model.Recipe;
+import mk.napijse.model.entities.Comment;
+import mk.napijse.model.entities.Recipe;
 import mk.napijse.service.CommentService;
 import mk.napijse.service.RecipeService;
 import org.springframework.stereotype.Controller;

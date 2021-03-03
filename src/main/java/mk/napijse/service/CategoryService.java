@@ -1,6 +1,6 @@
 package mk.napijse.service;
 
-import mk.napijse.model.Category;
+import mk.napijse.model.entities.Category;
 
 import java.util.List;
 

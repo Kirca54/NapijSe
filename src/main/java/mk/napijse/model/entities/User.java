@@ -1,4 +1,4 @@
-package mk.napijse.model;
+package mk.napijse.model.entities;
 
 import lombok.Data;
 import mk.napijse.model.enumerations.Role;
@@ -66,26 +66,6 @@ public class User implements UserDetails {
         return Collections.singletonList(role);
     }
 
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return false;
-//    }
-
     @Override
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;
@@ -106,85 +86,6 @@ public class User implements UserDetails {
         return isEnabled;
     }
 
-//    public boolean isAccountVerified() {
-//        return accountVerified;
-//    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public List<Recipe> getFavourites() {
-        return favourites;
-    }
-
-    public void setFavourites(List<Recipe> favourites) {
-        this.favourites = favourites;
-    }
-
-    public List<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
-    }
-
-    public void setAccountVerified(boolean accountVerified) {
-        this.accountVerified = accountVerified;
-    }
-
-    public Set<SecureToken> getTokens() {
-        return tokens;
-    }
-
-    public void setTokens(Set<SecureToken> tokens) {
-        this.tokens = tokens;
-    }
     public boolean isAccountVerified() {
         return accountVerified;
     }

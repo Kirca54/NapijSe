@@ -1,8 +1,6 @@
 package mk.napijse.web;
 
-import mk.napijse.model.Category;
-import mk.napijse.model.Comment;
-import mk.napijse.model.Recipe;
+import mk.napijse.model.entities.Comment;
 import mk.napijse.model.exceptions.CommentNotFoundException;
 import mk.napijse.model.exceptions.RecipeNotFoundException;
 import mk.napijse.service.CommentService;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class CommentsController {

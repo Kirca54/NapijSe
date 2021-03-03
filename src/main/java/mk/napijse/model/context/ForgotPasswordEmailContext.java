@@ -1,6 +1,6 @@
 package mk.napijse.model.context;
 
-import mk.napijse.model.User;
+import mk.napijse.model.entities.User;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public class ForgotPasswordEmailContext extends AbstractEmailContext {

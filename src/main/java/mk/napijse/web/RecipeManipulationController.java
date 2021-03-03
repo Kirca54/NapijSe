@@ -1,7 +1,7 @@
 package mk.napijse.web;
 
-import mk.napijse.model.Category;
-import mk.napijse.model.Recipe;
+import mk.napijse.model.entities.Category;
+import mk.napijse.model.entities.Recipe;
 import mk.napijse.model.exceptions.CategoryNotFoundException;
 import mk.napijse.model.exceptions.RecipeNotFoundException;
 import mk.napijse.service.CategoryService;
