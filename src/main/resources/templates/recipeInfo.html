@@ -1,4 +1,4 @@
-<div xmlns:th="http://www.thymeleaf.org">
+<th:block xmlns:th="http://www.thymeleaf.org">
     <br>
     <br>
     <br>
@@ -11,23 +11,29 @@
     </section>
     <!-- TODO levo da bidat informaciite za receptot - sostojki, datum, korisnik koj go postavil, kategorija a desno da bide
                 opisot - toa e ustvari nacinot na podgotovka -->
-    <div class="card center" style="width: 70%">
-        <h2>Опис</h2>
-        <h3 th:text="${recipe.description}"></h3>
-        <h2>Категорија</h2>
-        <h3 th:text="${recipe.category.name}"></h3>
-        <h2>Состојки</h2>
-        <div th:each="ingredient : ${#strings.arraySplit(recipe.ingredients, ',')}">
-            <h3 th:text="${ingredient}"></h3>
+    <div class="recipe-info center" style="width: 70%">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Категорија</h2>
+                <h3 th:text="${recipe.category.name}"></h3>
+                <h2>Состојки</h2>
+                <div th:each="ingredient : ${#strings.arraySplit(recipe.ingredients, ',')}">
+                    <h3 th:text="${ingredient}"></h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h2>Опис</h2>
+                <h3 th:text="${recipe.description}"></h3>
+                <h2>Креатор на рецептата</h2>
+                <h3>
+                    <a th:text="${recipe.recipeUser.username}"
+                       th:href="@{'/{username}/recipes' (username=${recipe.recipeUser.username})}"
+                       th:method="get"></a>
+                </h3>
+                <h2 th:text="${#dates.format(recipe.datePosted, 'dd-MMM-yyyy')}"></h2>
+            </div>
         </div>
-        <h2 th:text="${#dates.format(recipe.datePosted, 'dd-MMM-yyyy')}"></h2>
 
-        <h2>Креатор на рецептата</h2>
-        <h3>
-            <a th:text="${recipe.recipeUser.username}"
-               th:href="@{'/{username}/recipes' (username=${recipe.recipeUser.username})}"
-               th:method="get"></a>
-        </h3>
     </div>
     <br><br>
     <div class="table-responsive">
@@ -63,22 +69,25 @@
     </div>
     <div sec:authorize="!isAuthenticated()">
         <div id="formFooter">
-            <button class="center" style="display: block; margin-bottom: 100px;"><a class="underlineHover" href="/login">Логирајте се за да коментирате</a></button>
+            <a href="/login">
+                <button class="center add-recipe" >
+                    Логирајте се за да коментирате
+                </button>
+            </a>
         </div>
     </div>
     <div sec:authorize="isAuthenticated()">
         <form th:action="@{'/add-comment/{recipeId}' (recipeId=${recipe.id})}" method="post">
             <div class="form-group">
-                <label for="content"><h2>Додај коментар</h2></label>
-                <input type="text"
+                <textarea type="text"
                        class="login center"
                        id="content"
                        name="content"
                        required
                        placeholder="Внеси коментар"
-                       style="height: 200px; width: 60%">
+                          style="height: 200px; width: 60%"></textarea>
             </div>
-            <button type="submit" class="btn btn-block btn-dark center" style="width: 60%">Постави коментар</button>
+            <button type="submit" class="add-recipe" style="width: 60%">Постави коментар</button>
         </form>
     </div>
 
@@ -88,7 +97,8 @@
         <div class="col mb-3">
             <div>
                 <div class="col-sm-12 col-md-12">
-                    <button type="submit" class="btn btn-block btn-dark center" style="width: 60%">Назад кон рецепти
+                    <button type="submit" class="add-recipe">
+                        Назад кон рецепти
                     </button>
                 </div>
             </div>
@@ -153,4 +163,4 @@
     <!--    </div>-->
     <!--    -->
     <!--</div>-->
-</div>
+</th:block>>

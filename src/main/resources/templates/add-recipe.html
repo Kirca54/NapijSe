@@ -20,14 +20,14 @@
                     </div>
                     <div class="form-group">
                         <label for="description"><h2>Објаснување на рецепта</h2></label>
-                        <input type="text"
+                        <textarea type="text"
                                class="fadeIn first login"
                                id="description"
                                name="description"
-                               th:value="(${recipe} != null ? ${recipe.description} : '')"
+                               th:text="(${recipe} != null ? ${recipe.description} : '')"
                                required
                                placeholder="Внеси објаснување"
-                               style="height: 200px">
+                                  style="height: 200px"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="ingredients"><h2>Состојки на рецептата, разделени со запирка</h2></label>
@@ -56,8 +56,8 @@
                             </option>
                         </select>
                     </div>
-                    <button id="submit" type="submit" class="btn btn-primary">Додај рецепта</button>
-                    <a type="button" class="btn btn-primary" href="/recipes">Назад</a>
+                    <button id="submit" type="submit" class="add-recipe">Додај рецепта</button>
+                    <a href="/recipes" style="color: inherit"><button type="button" class="add-recipe">Назад</button></a>
                 </form>
             </div>
         </div>

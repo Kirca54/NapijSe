@@ -52,8 +52,10 @@
 
         </div>
 
-        <a sec:authorize="isAuthenticated()" href="/add-new-recipe" th:method="GET">
-            <button class="add-new-balloon-btn">Додај нова рецепта</button>
+        <a sec:authorize="isAuthenticated()" href="/add-new-recipe" th:method="GET" style="color: inherit">
+            <button class="add-recipe">
+                Додај нова рецепта
+            </button>
         </a>
 
     </main>
