@@ -1,27 +1,27 @@
-<section class="jumbotron text-center" >
-    <div class="container">
-        <h1 class="jumbotron-heading">Edit comment</h1>
-    </div>
-</section>
-
-<div class="container" xmlns:th="http://www.thymeleaf.org">
+<th:block>
+<div class="container" xmlns:th="http://www.thymeleaf.org" style="margin-top: 232px;">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <form th:action="@{'/edit-comment/{recipeId}/{commentId}' (recipeId=${comment.recipe.id}, commentId=${comment.id})}"
                   method="post">
                 <div class="form-group">
-                    <label for="content">Comment content</label>
-                    <input type="text"
+                    <label for="content"><h3>Содржина на коментар</h3></label>
+                    <textarea type="text"
                            class="login center"
                            id="content"
                            name="content"
-                           th:value="(${comment} != null ? ${comment.content} : '')"
+                           th:text="(${comment} != null ? ${comment.content} : '')"
                            required
-                           placeholder="Внеси коментар">
+                              style="height: 150px; width: 80%;text-align: left;padding: 10px"></textarea>
                 </div>
-                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                <button id="submit" type="submit" class="add-recipe">Submit</button>
             </form>
-            <a class="btn btn-danger" href="javascript:history.back()">Назад</a>
+            <a href="javascript:history.back()">
+                <button type="button" class="add-recipe">
+                    Назад
+                </button>
+            </a>
         </div>
     </div>
 </div>
+</th:block>

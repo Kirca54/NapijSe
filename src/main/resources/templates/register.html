@@ -12,23 +12,23 @@
 
     <!-- Login Form -->
     <form th:action="@{'/register'}" method="post">
-        <input type="text" id="name" class="fadeIn first login" name="name" placeholder="име"
+        <input type="text" id="name" class="login" name="name" placeholder="име"
         required="">
-        <input type="text" id="surname" class="fadeIn first login" name="surname" placeholder="презиме"
+        <input type="text" id="surname" class="login" name="surname" placeholder="презиме"
                required="">
-        <input type="text" id="username" class="fadeIn second login" name="username" placeholder="корисничко име"
+        <input type="text" id="username" class="login" name="username" placeholder="корисничко име"
                required="">
-        <input type="text" id="email" class="fadeIn second login" name="email" placeholder="e-mail">
-        <input type="password" id="passwordReg" class="fadeIn third login" name="password" placeholder="лозинка"
+        <input type="text" id="email" class="login" name="email" placeholder="e-mail">
+        <input type="password" id="passwordReg" class="login" name="password" placeholder="лозинка"
                required="">
-        <input type="password" id="repeatedPassword" class="fadeIn fourth login" name="repeatedPassword" placeholder="повтори лозинка"
+        <input type="password" id="repeatedPassword" class="login" name="repeatedPassword" placeholder="повтори лозинка"
                required="">
 
-        <input type="submit" class="fadeIn fourth" value="Регистрирај се">
+        <input type="submit" style="margin-top: 25px" value="Регистрирај се">
     </form>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-        <button class="center" style="display: block; margin-bottom: 100px;"><a class="underlineHover" href="/login">Веќе имате профил? Најавете се!</a></button>
+        <a href="/login"><button class="center" style="display: block; margin: 40px auto 100px;">Веќе имате профил? Најавете се!</button></a>
     </div>
 </div>

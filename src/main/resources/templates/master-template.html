@@ -44,7 +44,7 @@
             }
         }
         body{
-            margin-top: 112px;
+            margin-top: 150px;
         }
         .navbar{
             min-height: 112px;
@@ -232,7 +232,9 @@
             /*background: url("https://svgshare.com/i/URT.svg");*/
         }
         .recipe-info{
-            background: linear-gradient(135deg, #8B787878, #90C7C7C7);
+            background: linear-gradient(
+                    56deg
+                    , #6ebfbfb8, #f3d250ad);
             position: relative;
             display: -ms-flexbox;
             display: flex;
@@ -359,6 +361,14 @@
         }
         a:hover{
             text-decoration: none;
+        }
+        .table-striped>tbody>tr:nth-child(odd)>td,
+        .table-striped>tbody>tr:nth-child(odd)>th {
+            background-color: #e7e7e7;
+        }
+        .table-striped>tbody>tr:nth-child(even)>td,
+        .table-striped>tbody>tr:nth-child(even)>th {
+            background-color: #ffffff;
         }
     </style>
 </head>
