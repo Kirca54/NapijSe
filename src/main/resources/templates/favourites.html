@@ -25,17 +25,13 @@
                     <h2 th:text="${recipe.category.name}"></h2>
                     <h2 th:text="${#dates.format(recipe.datePosted, 'dd-MMM-yyyy')}"></h2>
                 </form>
-
-                <button class="delete-from-favorites" type="submit">
-                    <a th:href="@{'/{username}/delete-from-favourites/{recipeId}'
-                    (username=${#request.getRemoteUser()}, id=${recipe.id})}" th:method="post"
-                    style="color: inherit">
+                <form th:action="@{'/{username}/delete-from-favourites/{recipeId}'
+                    (username=${#request.getRemoteUser()}, recipeId=${recipe.id})}" th:method="post">
+                    <button class="delete-from-favorites" type="submit" style="color: white">
                         Избриши од омилени
-                    </a>
-                </button>
-
+                    </button>
+                </form>
             </div>
         </div>
-
     </div>
 </main>
