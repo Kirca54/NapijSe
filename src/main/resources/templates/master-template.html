@@ -44,7 +44,7 @@
             }
         }
         body{
-            margin-top: 112px;
+            margin-top: 150px;
         }
         .navbar{
             min-height: 112px;
@@ -144,8 +144,8 @@
             0%   { transform: scale(1)   translate(10px, -30px); }
             38%  { transform: scale(0.8, 1) translate(80vw, 20vh) rotate(160deg); }
             40%  { transform: scale(0.8, 1) translate(80vw, 20vh) rotate(160deg); }
-            78%  { transform: scale(1.3) translate(0vw, 100vh) rotate(-20deg); }
-            80%  { transform: scale(1.3) translate(0vw, 100vh) rotate(-20deg); }
+            78%  { transform: scale(1.3) translate(0vw, 80vh) rotate(-20deg); }
+            80%  { transform: scale(1.3) translate(0vw, 80vh) rotate(-20deg); }
             100% { transform: scale(1)   translate(10px, -30px); }
         }
         @keyframes move2 {
@@ -166,7 +166,7 @@
         }
         #home1{
             /*background: url("https://svgshare.com/i/URT.svg") no-repeat;*/
-            margin: 130px auto;
+            margin: 130px auto 60px;
         }
         h1{
             color: white;
@@ -185,6 +185,14 @@
             text-align: -webkit-center;
             font-variant: petite-caps;
             font-weight: bolder;
+        }
+        h3{
+            color: black;
+            font-size: 15px;
+            position: relative;
+            text-align: -webkit-center;
+            font-variant: petite-caps;
+            font-weight: bold;
         }
         body{
             /*background: #FFB1A4;*/
@@ -223,6 +231,24 @@
             padding: 25px;
             /*background: url("https://svgshare.com/i/URT.svg");*/
         }
+        .recipe-info{
+            background: linear-gradient(
+                    56deg
+                    , #6ebfbfb8, #f3d250ad);
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-clip: border-box;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: 0;
+            box-shadow: 0 4px 8px 0 rgb(0 0 0);
+            margin: 8px;
+            padding: 25px;
+        }
         .row .column{
             width: 33%;
         }
@@ -250,10 +276,12 @@
             font-variant: petite-caps;
             font-weight: bolder;
         }
+
         button:hover, input:hover{
             background: linear-gradient(
                     45deg
                     , #3f3fff, #0101b7);
+
         }
         .form-control{
             color: white !important;
@@ -292,15 +320,56 @@
             text-align: -webkit-center;
             font-variant: petite-caps;
             font-weight: bolder;
+            overflow-wrap: break-word;
+
+        }
+        input.login:hover{
+            background: whitesmoke;
         }
         .logo-login{
             position: relative;
-            margin: 0 auto;
             width: 33%;
             display: block;
-            margin-top: 50px;
+            margin: 50px auto 0;
         }
-
+        .table-striped{
+            width: 80%;
+            margin: 50px auto;
+        }
+        button.admin-btn{
+            border-radius: 0;
+            width: 100%;
+            margin: 0;
+        }
+        button.delete-from-favorites{
+            display: block;
+            border-radius: 80%;
+            width: 50%;
+            margin: auto;
+            color: white;
+        }
+        button.add-recipe{
+            font-size: 2em;
+            display: block;
+            cursor: pointer;
+            border-radius: 6px;
+            width: 40%;
+            margin: 30px auto;
+            color: white;
+            background-color: #428bca;
+            border-color: #357ebd;
+        }
+        a:hover{
+            text-decoration: none;
+        }
+        .table-striped>tbody>tr:nth-child(odd)>td,
+        .table-striped>tbody>tr:nth-child(odd)>th {
+            background-color: #e7e7e7;
+        }
+        .table-striped>tbody>tr:nth-child(even)>td,
+        .table-striped>tbody>tr:nth-child(even)>th {
+            background-color: #ffffff;
+        }
     </style>
 </head>
 <body>

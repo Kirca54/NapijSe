@@ -17,8 +17,9 @@
                         <a th:href="@{/recipes}" th:method="get">Рецепти</a>
                     </li>
                     <li>
-                        <!--TODO: moi recepti-->
-                        <a sec:authorize="isAuthenticated()" th:action="" th:method="get">Мои Рецепти</a>
+                        <a sec:authorize="isAuthenticated()"
+                           th:href="@{'/{username}/recipes' (username=${#request.getRemoteUser()})}"
+                           th:method="get">Мои Рецепти</a>
                     </li>
                     <li>
                         <a sec:authorize="isAuthenticated()"
@@ -27,7 +28,11 @@
                            th:method="get">Омилени</a>
                     </li>
                     <li>
-                        <a sec:authorize="hasRole('ROLE_ADMIN')" href="#">ADMIN</a>
+                        <a sec:authorize="isAuthenticated()"
+                           th:href="@{/calendar}" th:method="get">Настани</a>
+                    </li>
+                    <li>
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin-page}">ADMIN</a>
                     </li>
                     <li>
                         <a sec:authorize="!isAuthenticated()" th:href="@{'/register'}" th:method="get">Регистрирај се</a>
@@ -42,5 +47,4 @@
             </div>
         </div>
     </nav>
-
 </header>

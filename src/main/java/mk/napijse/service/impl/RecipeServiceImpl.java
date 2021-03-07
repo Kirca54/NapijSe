@@ -110,4 +110,10 @@ public class RecipeServiceImpl implements RecipeService {
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
         return this.recipeRepository.findAllByNameContainingIgnoreCaseAndCategory(name, category);
     }
+
+    @Override
+    public List<Recipe> findAllByRecipeUser(String username) {
+        User user = this.userRepository.findByUsername(username).get();
+        return this.recipeRepository.findAllByRecipeUser(user);
+    }
 }

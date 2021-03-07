@@ -1,122 +1,72 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8">
-    <title>NapijSe</title>
-    <style type="text/css">
-        body {
-            width: 800px;
-            margin: auto;
-        }
-    </style>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-</head>
-<body>
-<header>
-    <h1>Welcome to NapijSe</h1>
-</header>
-<main class="container">
-    <h2>Choose balloon color:</h2>
-    <div th:if="${hasError}">
-        <h3 th:text="${error}"></h3>
-    </div>
-    <div sec:authorize="isAuthenticated()">
-        <div th:if="${#request.getRemoteUser()!=null}">
-            Current user:
-            <th:block th:text="${#request.getRemoteUser()}"/>
-        </div>
-    </div>
-    <form class="form-signin mt-xl-5" method="post" action="/recipes/search">
-        <label for="recipeName" class="sr-only">Search</label>
-        <input type="text" id="recipeName" name="recipeName" class="form-control" placeholder="Search by recipe name" autofocus="">
-        <label>Category</label>
-        <select id="categoryId" name="categoryId" class="form-control">
-            <option value="">All categories</option>
-            <option th:each="category: ${categories}"
-                    th:value="${category.id}"
-                    th:text="${category.name}">
-            </option>
-        </select>
-        <button class="btn btn-lg btn-primary" type="submit">Search</button>
-    </form>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">Recipe name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Category</th>
-            <th scope="col">Ingredients</th>
-            <th scope="col">Date</th>
-            <th scope="col">user</th>
-            <th scope="col">email</th>
-            <th scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="recipe : ${recipes}">
-            <td>
-                <form th:action="@{'/recipes/info/{id}' (id=${recipe.id})}" th:method="GET">
-                    <button class="add-to-cart-btn" type="submit"
-                            th:text="${recipe.name}" th:value="${recipe.id}">
-                    </button>
-                </form>
-            </td>
-            <td th:text="${recipe.description}"></td>
-            <td th:text="${recipe.category.name}"></td>
-            <td th:text="${recipe.ingredients}"></td>
-            <td th:text="${recipe.datePosted}"></td>
-            <td th:text="${recipe.recipeUser.username}"></td>
-            <td th:text="${recipe.recipeUser.email}"></td>
-            <td class="text-right">
-                <form th:action="@{'/{username}/add-to-favourites/{recipeId}'
-                (username=${#request.getRemoteUser()}, recipeId=${recipe.id})}" th:method="POST">
-                    <input type="text" name="color" th:value="${recipe.id}" hidden>
-                    <button class="add-to-cart-btn" type="submit">Add to favourites</button>
-                </form>
-                <div>
-                    <form th:action="@{'/recipes/delete/{id}' (id=${recipe.id})}" method="post">
-                        <button class="delete-balloon-btn" type="submit">Delete</button>
-                    </form>
-                </div>
-                <div>
-                    <form th:action="@{'/recipes/edit/{id}' (id=${recipe.id})}">
-                        <button class="edit-balloon-btn">Edit</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<div xmlns:th="http://www.thymeleaf.org">
     <br>
-    <a href="/add-new-recipe" th:method="GET">
-        <button class="add-new-balloon-btn">Add new recipe</button>
-    </a>
-    <div>
-        <form th:action="@{'/{username}/favourites' (username=${#request.getRemoteUser()})}" th:method="GET">
-            <!--sec:authorize="isAuthenticated()" vo input tagot-->
-            <input type="submit" value="Show favourites">
+    <br>
+    <main class="container">
+        <div th:if="${hasError}">
+            <h3 th:text="${error}"></h3>
+        </div>
+        <br>
+        <div sec:authorize="isAuthenticated()">
+            <div th:if="${#request.getRemoteUser()!=null}">
+                <h2>Најавен корисник:
+                    <th:block th:text="${#request.getRemoteUser()}"/>
+                </h2>
+            </div>
+        </div>
+
+        <!-- TODO da se stilizira searchot, mozebi -->
+
+        <form class="form-signin mt-xl-5" method="post" action="/recipes/search">
+            <label for="recipeName" class="sr-only">Пребарај</label>
+            <input type="text" id="recipeName" name="recipeName" class="fadeIn first login"
+                   placeholder="Внеси име на рецепт" autofocus="">
+            <label>Категорија</label>
+            <select id="categoryId" name="categoryId" class="fadeIn first login">
+                <option style="color: black" value="">Сите категории</option>
+                <option style="color: black" th:each="category: ${categories}"
+                        th:value="${category.id}"
+                        th:text="${category.name}">
+                </option>
+            </select>
+            <button class="add-recipe" type="submit" style="width: 20%">Пребарај</button>
         </form>
-    </div>
-    <!--<div sec:authorize="isAuthenticated()">
-        <form th:action="@{/logout}" th:method="GET">
-            <input type="submit" value="Logout">
-        </form>
-    </div>
-    <div sec:authorize="!isAuthenticated()">
-        <form th:action="@{/login}" th:method="GET">
-            <input type="submit" value="Login">
-        </form>
-    </div>-->
-</main>
-</body>
-</html>
+        <div class="row" style="padding: 10px">
+            <div class="column" th:each="recipe : ${recipes}">
+                <div class="card">
+                    <form th:action="@{'/recipes/info/{id}' (id=${recipe.id})}" th:method="GET">
+                        <button class="add-to-cart-btn" type="submit"
+                                th:text="${recipe.name}" th:value="${recipe.id}">
+                        </button>
+                        <h2 th:text="${recipe.category.name}"></h2>
+                        <h2 th:text="${#dates.format(recipe.datePosted, 'dd-MMM-yyyy')}"></h2>
+                    </form>
+                    <form sec:authorize="isAuthenticated()"
+                          th:action="@{'/{username}/add-to-favourites/{recipeId}'
+                            (username=${#request.getRemoteUser()}, recipeId=${recipe.id})}"
+                          th:method="POST">
+                        <input type="text" name="color" th:value="${recipe.id}" hidden>
+                        <button class="add-to-cart-btn" type="submit">Додај во омилени</button>
+                    </form>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <form th:action="@{'/recipes/delete/{id}' (id=${recipe.id})}" method="post">
+                            <button class="delete-balloon-btn" type="submit">Избриши</button>
+                        </form>
+                    </div>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <form th:action="@{'/recipes/edit/{id}' (id=${recipe.id})}">
+                            <button class="edit-balloon-btn">Промени</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <a sec:authorize="isAuthenticated()" href="/add-new-recipe" th:method="GET" style="color: inherit">
+            <button class="add-recipe">
+                    Додај нова рецепта
+            </button>
+        </a>
+
+    </main>
+</div>

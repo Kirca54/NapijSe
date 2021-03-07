@@ -2,6 +2,7 @@ package mk.napijse.web;
 
 import mk.napijse.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,21 +22,12 @@ class CalendarController {
         this.eventService = eventService;
     }
 
-    @RequestMapping(value="/", method=RequestMethod.GET)
-    public ModelAndView index() {
-        return new ModelAndView("index");
-    }
-
-    @RequestMapping(value="/staticcalendar", method=RequestMethod.GET)
-    public ModelAndView staticcalendar() {
-        return new ModelAndView("staticcalendar");
-    }
-
     @RequestMapping(value="/calendar", method=RequestMethod.GET)
     public ModelAndView calendar() {
         return new ModelAndView("calendar");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/jsoncalendar", method=RequestMethod.GET)
     public ModelAndView jsoncalendar() {
         return new ModelAndView("jsoncalendar");
@@ -43,9 +35,7 @@ class CalendarController {
 
     @RequestMapping(value="/eventlist", method=RequestMethod.GET)
     public String events(HttpServletRequest request, Model model) {
-        Principal principal = request.getUserPrincipal();
-        String username = principal.getName();
-        model.addAttribute("events", this.eventService.findAllByUser(username));
+        model.addAttribute("events", this.eventService.findAll());
         return "events";
     }
 }

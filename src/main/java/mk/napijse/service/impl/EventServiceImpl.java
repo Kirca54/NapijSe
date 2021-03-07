@@ -23,10 +23,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> findAllByDateBetween(LocalDateTime startDate, LocalDateTime endDate, String username) {
-        User user = this.userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException(username));
-        return this.eventRepository.findByStartGreaterThanEqualAndFinishLessThanEqualAndUser(startDate, endDate, user);
+    public List<Event> findAllByDateBetween(LocalDateTime startDate, LocalDateTime endDate) {
+        return this.eventRepository.findByStartGreaterThanEqualAndFinishLessThanEqual(startDate, endDate);
     }
 
     @Override

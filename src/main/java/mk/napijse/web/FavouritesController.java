@@ -39,12 +39,14 @@ public class FavouritesController {
 
                 model.addAttribute("username", username);
                 model.addAttribute("favourites", favourites);
+
+                model.addAttribute("bodyContent", "favourites");
+                return "master-template";
             }
             else return "redirect:/recipes?error=You can't display other user's favourite recipes";
         }catch (UsernameNotFoundException exception){
             return "redirect:/recipes?error="+exception.getMessage();
         }
-        return "favourites";
     }
 
     @PostMapping("/{username}/delete-from-favourites/{recipeId}")
@@ -70,7 +72,7 @@ public class FavouritesController {
                                   HttpServletRequest request){
         try {
             if (request.getUserPrincipal().getName().equals(username)){
-                User user = (User) this.userService.loadUserByUsername(username);
+                User user = this.userService.findByUsername(username).get();
                 if(user.getFavourites()
                         .stream().filter(i -> i.getId().equals(recipeId)).count() > 0)
                     throw new RecipeAlreadyInFavouritesException();

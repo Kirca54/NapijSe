@@ -1,20 +1,25 @@
-<div class="container" xmlns:th="http://www.thymeleaf.org">
-    <form class="form-signin mt-xl-5" method="post" action="/login/post">
-        <h2 class="form-signin-heading">Sign in</h2>
-        <p>
-            <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required=""
-                   autofocus="">
-        </p>
-        <p>
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password"
-                   required="">
-        </p>
+<div id="formContent" xmlns:th="http://www.thymeleaf.org">
+    <!-- Tabs Titles -->
 
-        <div th:text="${param.error}" class="text-danger"></div>
+    <!-- Icon -->
+    <div class="fadeIn first form-group">
+        <img class="logo-login" src="https://i.imgur.com/OuxCIKn.png"/>
+    </div>
 
-        <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <div th:if="${hasError}">
+        <h3 th:text="${error}"></h3>
+    </div>
+
+    <!-- Login Form -->
+    <form th:action="@{'/login/post'}" method="post">
+        <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+        <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
-    <a href="/register" class="btn btn-block btn-light">Register here</a>
+
+    <!-- Register -->
+    <div id="formFooter">
+        <a href="/register"><button class="center add-recipe">Register here</button></a>
+    </div>
 </div>
+

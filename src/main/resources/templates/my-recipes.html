@@ -4,18 +4,22 @@
             <h3 th:text="${error}"></h3>
         </div>
         <br>
-        <div sec:authorize="isAuthenticated()">
-            <div th:if="${#request.getRemoteUser()!=null}">
-                <h2>Рецепти на корисник:
-                    <th:block th:text="${#request.getRemoteUser()}"/>
-                </h2>
+        <div>
+            <h2>Рецепти на корисник:
+                <th:block th:text="${user.username}"/>
+            </h2>
+            <div>
+                <h3 style="color: blanchedalmond">Име:
+                    <th:block th:text="${user.name}"/>
+                </h3>
+                <h3 style="color: blanchedalmond">Презиме:
+                    <th:block th:text="${user.surname}"/>
+                </h3>
+                <h3 style="color: blanchedalmond">Е-mail:
+                    <th:block th:text="${user.email}"/>
+                </h3>
             </div>
         </div>
-        <!--<form class="form-signin mt-xl-5" method="post" action="/balloons/searchBalloon">
-            <label for="search" class="sr-only">Search</label>
-            <input type="text" id="search" name="search" class="form-control" placeholder="Search by color or desc" required="" autofocus="">
-            <button class="btn btn-lg btn-primary" type="submit">Search</button>
-        </form>-->
         <div class="row" style="padding: 10px">
             <div class="column" th:each="recipe : ${recipes}">
                 <div class="card">
@@ -23,23 +27,21 @@
                         <button class="add-to-cart-btn" type="submit"
                                 th:text="${recipe.name}" th:value="${recipe.id}">
                         </button>
-                        <h2 th:text="${recipe.description}"></h2>
                         <h2 th:text="${recipe.category.name}"></h2>
-                        <h2 th:text="${recipe.ingredients}"></h2>
-                        <h2 th:text="${recipe.datePosted}"></h2>
-                        <h2 th:text="${recipe.createdBy}"></h2>
-
+                        <h2 th:text="${#dates.format(recipe.datePosted, 'dd-MMM-yyyy')}"></h2>
                     </form>
-                    <form action="/recipes/add-to-favourites" th:method="POST">
+                    <form sec:authorize="isAuthenticated()"
+                          th:action="@{'/{username}/add-to-favourites/{recipeId}'
+                          (username=${#request.getRemoteUser()}, recipeId=${recipe.id})}" th:method="POST">
                         <input type="text" name="color" th:value="${recipe.id}" hidden>
                         <button class="add-to-cart-btn" type="submit">Додај во омилени</button>
                     </form>
-                    <div>
+                    <div sec:authorize="isAuthenticated()">
                         <form th:action="@{'/recipes/delete/{id}' (id=${recipe.id})}" method="post">
                             <button class="delete-balloon-btn" type="submit">Избриши</button>
                         </form>
                     </div>
-                    <div>
+                    <div sec:authorize="isAuthenticated()">
                         <form th:action="@{'/recipes/edit/{id}' (id=${recipe.id})}">
                             <button class="edit-balloon-btn">Промени</button>
                         </form>
@@ -50,14 +52,11 @@
 
         </div>
 
-        <a href="/add-new-recipe" th:method="GET">
-            <button class="add-new-balloon-btn">Додај нова рецепта</button>
+        <a sec:authorize="isAuthenticated()" href="/add-new-recipe" th:method="GET" style="color: inherit">
+            <button class="add-recipe">
+                Додај нова рецепта
+            </button>
         </a>
-        <div>
-            <form th:action="@{/favourites}" th:method="GET">
-                <input type="submit" value="Омилени">
-            </form>
-        </div>
 
     </main>
 </th:block>
