@@ -14,13 +14,12 @@
             </div>
         </div>
 
-        <!-- TODO da se stilizira searchot, mozebi -->
 
         <form class="form-signin mt-xl-5" method="post" action="/recipes/search">
             <label for="recipeName" class="sr-only">Пребарај</label>
             <input type="text" id="recipeName" name="recipeName" class="fadeIn first login"
                    placeholder="Внеси име на рецепт" autofocus="">
-            <label>Категорија</label>
+            <label><h2>Категорија</h2></label>
             <select id="categoryId" name="categoryId" class="fadeIn first login">
                 <option style="color: black" value="">Сите категории</option>
                 <option style="color: black" th:each="category: ${categories}"
@@ -28,7 +27,7 @@
                         th:text="${category.name}">
                 </option>
             </select>
-            <button class="add-recipe" type="submit" style="width: 20%">Пребарај</button>
+            <button class="add-recipe" type="submit">Пребарај</button>
         </form>
         <div class="row" style="padding: 10px">
             <div class="column" th:each="recipe : ${recipes}">
