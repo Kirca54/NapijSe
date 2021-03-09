@@ -77,7 +77,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user = this.userRepository.save(user);
         System.out.println("register "+user.getUsername());
         System.out.println("register "+user.getPassword());
-        this.sendRegistrationConfirmationEmail(user);
+        //TODO: ODKOMENTIRAJ GO OVA
+        //this.sendRegistrationConfirmationEmail(user);
         return user;
     }
 

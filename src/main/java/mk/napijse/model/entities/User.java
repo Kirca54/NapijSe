@@ -25,11 +25,20 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<SecureToken> tokens;
+
     @ManyToMany
     private List<Recipe> favourites;
 
     @OneToMany(mappedBy = "recipeUser", fetch = FetchType.EAGER)
     private List<Recipe> recipes;
+
+    @OneToMany(mappedBy = "commentUser", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Event> events;
 
     private boolean isAccountNonExpired = true;
     private boolean isAccountNonLocked = true;
@@ -47,8 +56,6 @@ public class User implements UserDetails {
         this.favourites = new ArrayList<>();
         this.accountVerified = false;
     }
-    @OneToMany(mappedBy = "user")
-    private Set<SecureToken> tokens;
 
     public User() {
     }
