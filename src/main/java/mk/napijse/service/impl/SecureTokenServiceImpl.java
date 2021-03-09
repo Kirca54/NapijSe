@@ -23,8 +23,11 @@ public class MailVerificationImpl implements MailVerificationService {
     @Value("${jdj.secure.token.validity}")
     private int tokenValidityInSeconds;
 
-    @Autowired
-    SecureTokenRepository secureTokenRepository;
+    private final SecureTokenRepository secureTokenRepository;
+
+    public MailVerificationImpl(SecureTokenRepository secureTokenRepository) {
+        this.secureTokenRepository = secureTokenRepository;
+    }
 
     @Override
     public SecureToken createSecureToken(){
