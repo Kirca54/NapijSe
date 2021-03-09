@@ -16,10 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    public UserDetailsService userDetailsService;
-
-
     private final PasswordEncoder passwordEncoder;
 
     private final CustomUsernamePasswordAuthenticationProvider customUsernamePasswordAuthenticationProvider;
@@ -38,23 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        //http.csrf().disable()
-        //        .authorizeRequests()
-        //        .antMatchers("/").permitAll()
-        //        .anyRequest().hasRole("ADMIN")
-        //        .and()
-        //        .formLogin()
-        //        .failureUrl("/login?error=BadCredentials")
-        //        .defaultSuccessUrl("/home", true)
-        //        .and()
-        //        .logout()
-        //        .logoutUrl("/logout")
-        //        .clearAuthentication(true)
-        //        .invalidateHttpSession(true)
-        //        .deleteCookies("JSESSIONID")
-        //        .logoutSuccessUrl("/");
-
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/","/h2" ,"/home", "/recipes", "/register", "/register/verify",
@@ -85,6 +64,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(this.customUsernamePasswordAuthenticationProvider);
     }
-
-
 }

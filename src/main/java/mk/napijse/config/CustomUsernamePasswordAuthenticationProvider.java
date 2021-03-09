@@ -37,8 +37,6 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
             throw new BadCredentialsException("Invalid Credentials");
         }
 
-        //UserDetails userDetails = this.userService.loadUserByUsername(username);
-        //System.out.println(userDetails.getUsername());
         User user = this.authenticationService.login(username, password);
 
         if (!this.passwordEncoder.matches(password, user.getPassword())) {

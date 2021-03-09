@@ -1,6 +1,5 @@
 package mk.napijse.web;
 
-import mk.napijse.model.dto.ResetPasswordDto;
 import mk.napijse.model.exceptions.InvalidTokenException;
 import mk.napijse.model.exceptions.PasswordsDoNotMatchException;
 import mk.napijse.model.exceptions.UserNotFoundException;
@@ -21,10 +20,6 @@ public class ResetPasswordController {
 
     public ResetPasswordController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
-    }
-
-    private void setResetPasswordForm(final Model model, ResetPasswordDto data){
-        model.addAttribute("forgotPassword",data);
     }
 
     @GetMapping("/forgot-password")

@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.getOne(secureToken.getUser().getUsername());
 
         user.setAccountVerified(true);
-        userRepository.save(user); // let's same user details
+        userRepository.save(user);
         System.out.println("verify user "+user.getUsername());
         System.out.println("verify user "+user.getPassword());
         // we don't need invalid password now
