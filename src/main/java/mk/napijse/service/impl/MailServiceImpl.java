@@ -27,11 +27,13 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class MailServiceImpl implements MailService {
 
-    @Autowired
-    private JavaMailSender emailSender;
+    private final JavaMailSender emailSender;
+    private final SpringTemplateEngine templateEngine;
 
-    @Autowired
-    private SpringTemplateEngine templateEngine;
+    public MailServiceImpl(JavaMailSender emailSender, SpringTemplateEngine templateEngine) {
+        this.emailSender = emailSender;
+        this.templateEngine = templateEngine;
+    }
 
     @Override
     public void sendMail(AbstractEmailContext email) throws MessagingException {

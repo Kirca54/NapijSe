@@ -2,9 +2,8 @@ package mk.napijse.service.impl;
 
 import mk.napijse.model.entities.SecureToken;
 import mk.napijse.repository.SecureTokenRepository;
-import mk.napijse.service.MailVerificationService;
+import mk.napijse.service.SecureTokenService;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.keygen.BytesKeyGenerator;
 import org.springframework.security.crypto.keygen.KeyGenerators;
@@ -14,7 +13,7 @@ import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 
 @Service
-public class MailVerificationImpl implements MailVerificationService {
+public class SecureTokenServiceImpl implements SecureTokenService {
 
 
     private static final BytesKeyGenerator DEFAULT_TOKEN_GENERATOR = KeyGenerators.secureRandom(15);
@@ -25,7 +24,7 @@ public class MailVerificationImpl implements MailVerificationService {
 
     private final SecureTokenRepository secureTokenRepository;
 
-    public MailVerificationImpl(SecureTokenRepository secureTokenRepository) {
+    public SecureTokenServiceImpl(SecureTokenRepository secureTokenRepository) {
         this.secureTokenRepository = secureTokenRepository;
     }
 
