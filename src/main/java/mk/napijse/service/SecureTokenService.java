@@ -2,7 +2,7 @@ package mk.napijse.service;
 
 import mk.napijse.model.entities.SecureToken;
 
-public interface MailVerificationService {
+public interface SecureTokenService {
     SecureToken createSecureToken();
     void saveSecureToken(final SecureToken token);
     SecureToken findByToken(final String token);

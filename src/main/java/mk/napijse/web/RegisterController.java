@@ -1,8 +1,7 @@
 package mk.napijse.web;
 
 import mk.napijse.model.enumerations.Role;
-import mk.napijse.model.exceptions.InvalidArgumentsException;
-import mk.napijse.model.exceptions.PasswordsDoNotMatchException;
+import mk.napijse.model.exceptions.*;
 import mk.napijse.service.AuthenticationService;
 import mk.napijse.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -55,7 +54,10 @@ public class RegisterController {
             //TODO master template za verifikacija ili mozebi nema potreba - ke odlucime zaedno
             model.addAttribute("bodyContent", "verification");
             return "master-template";
-        } catch (InvalidArgumentsException | PasswordsDoNotMatchException exception) {
+        } catch (EmailAlreadyExistsException
+                | InvalidUsernameOrPasswordException
+                | PasswordsDoNotMatchException
+                | UsernameAlreadyExistsException exception) {
             return "redirect:/register?error=" + exception.getMessage();
         }
     }

@@ -34,7 +34,6 @@ public class SecureToken{
     private boolean isExpired;
 
     public boolean isExpired() {
-
-        return getExpireAt().isBefore(LocalDateTime.now()); // this is generic implementation, you can always make it timezone specific
+        return getExpireAt().isBefore(LocalDateTime.now());
     }
 }

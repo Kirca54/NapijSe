@@ -8,7 +8,7 @@ import mk.napijse.model.exceptions.*;
 import mk.napijse.repository.SecureTokenRepository;
 import mk.napijse.repository.UserRepository;
 import mk.napijse.service.MailService;
-import mk.napijse.service.MailVerificationService;
+import mk.napijse.service.SecureTokenService;
 import mk.napijse.service.UserService;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
-    private final MailVerificationService mailVerificationService;
+    private final SecureTokenService secureTokenService;
     private final SecureTokenRepository secureTokenRepository;
 
     @Value("${site.base.url.https}")
@@ -41,12 +41,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserServiceImpl(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
                            MailService mailService,
-                           MailVerificationService mailVerificationService,
+                           SecureTokenService secureTokenService,
                            SecureTokenRepository secureTokenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.mailService = mailService;
-        this.mailVerificationService = mailVerificationService;
+        this.secureTokenService = secureTokenService;
         this.secureTokenRepository = secureTokenRepository;
     }
 
@@ -65,6 +65,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User register(String username, String password, String repeatPassword, String email, String name, String surname, Role role) {
         String encrypted = this.passwordEncoder.encode(password);
+        if (this.checkIfUserExist(email))
+            throw new EmailAlreadyExistsException();
         if (username==null || username.isEmpty()  || password==null || password.isEmpty())
             throw new InvalidUsernameOrPasswordException();
         if (!password.equals(repeatPassword))
@@ -86,7 +88,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void sendRegistrationConfirmationEmail(User user) {
-        SecureToken secureToken= mailVerificationService.createSecureToken();
+        SecureToken secureToken = secureTokenService.createSecureToken();
         secureToken.setUser(user);
         secureTokenRepository.save(secureToken);
         AccountVerificationEmailContext emailContext = new AccountVerificationEmailContext();
@@ -112,7 +114,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.getOne(secureToken.getUser().getUsername());
 
         user.setAccountVerified(true);
-        userRepository.save(user); // let's same user details
+        userRepository.save(user);
         System.out.println("verify user "+user.getUsername());
         System.out.println("verify user "+user.getPassword());
         // we don't need invalid password now

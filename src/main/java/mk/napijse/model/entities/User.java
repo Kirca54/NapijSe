@@ -36,6 +36,7 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
     private boolean accountVerified;
+    private boolean loginDisabled;
 
     public User(String name, String surname, String email, String username, String password, Role role) {
         this.name = name;
@@ -88,5 +89,9 @@ public class User implements UserDetails {
 
     public boolean isAccountVerified() {
         return accountVerified;
+    }
+
+    public boolean isLoginDisabled() {
+        return loginDisabled;
     }
 }
