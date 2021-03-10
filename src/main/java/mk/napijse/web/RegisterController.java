@@ -51,7 +51,6 @@ public class RegisterController {
                            Model model) {
         try{
             this.userService.register(username, password, repeatedPassword, email, name, surname, Role.ROLE_USER);
-            //TODO master template za verifikacija ili mozebi nema potreba - ke odlucime zaedno
             model.addAttribute("bodyContent", "verification");
             return "master-template";
         } catch (EmailAlreadyExistsException

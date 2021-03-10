@@ -117,7 +117,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
         System.out.println("verify user "+user.getUsername());
         System.out.println("verify user "+user.getPassword());
-        // we don't need invalid password now
         secureTokenRepository.removeByToken(token);
         return true;
     }
