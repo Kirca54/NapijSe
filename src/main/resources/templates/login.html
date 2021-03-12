@@ -17,6 +17,15 @@
         <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 
+    <form action="/signin/facebook" method="POST">
+        <input type="hidden" name="scope" value="public_profile" />
+        <input type="submit" value="Login using Facebook"/>
+    </form>
+
+    <div>
+        <a href="/forgot-password"><button class="center add-recipe">Forgot password</button></a>
+    </div>
+
     <!-- Register -->
     <div id="formFooter">
         <a href="/register"><button class="center add-recipe">Register here</button></a>
