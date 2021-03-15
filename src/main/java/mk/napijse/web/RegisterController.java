@@ -56,7 +56,8 @@ public class RegisterController {
         } catch (EmailAlreadyExistsException
                 | InvalidUsernameOrPasswordException
                 | PasswordsDoNotMatchException
-                | UsernameAlreadyExistsException exception) {
+                | UsernameAlreadyExistsException
+                | InvalidEmailFormatException exception) {
             return "redirect:/register?error=" + exception.getMessage();
         }
     }

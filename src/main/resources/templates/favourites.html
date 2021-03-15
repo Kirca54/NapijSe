@@ -15,7 +15,7 @@
         <input type="text" id="search" name="search" class="form-control" placeholder="Search by color or desc" required="" autofocus="">
         <button class="btn btn-lg btn-primary" type="submit">Search</button>
     </form>-->
-    <div class="row" style="padding: 10px">
+    <div class="row" th:if="${favourites.size() > 0}" style="padding: 10px">
         <div class="column" th:each="recipe : ${favourites}">
             <div class="card">
                 <form th:action="@{'/recipes/info/{id}' (id=${recipe.id})}" th:method="GET">
@@ -33,5 +33,10 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div class="row" th:if="${favourites.size() == 0}" style="padding: 10px">
+        <h2>
+            Моментално немате омилени рецепти
+        </h2>
     </div>
 </main>
