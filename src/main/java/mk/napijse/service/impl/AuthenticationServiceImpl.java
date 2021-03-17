@@ -83,12 +83,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.userRepository.save(user);
     }
 
-    @Override
-    public boolean loginDisabled(String email) {
-        User user = this.userRepository.findByEmail(email);
-        return user != null && user.isLoginDisabled();
-    }
-
     protected void sendResetPasswordEmail(User user) {
         SecureToken secureToken = tokenService.createSecureToken();
         secureToken.setUser(user);

@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -27,6 +28,9 @@ public class Recipe {
 
     @ManyToOne
     private Category category;
+
+    @OneToMany(mappedBy = "recipe", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Comment> comments;
 
     public Recipe(String name, String description, String ingredients, User recipeUser, Category category) {
         this.name = name;

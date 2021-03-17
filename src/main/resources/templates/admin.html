@@ -2,56 +2,71 @@
 
     <h1><br><br><br>Admin page</h1>
     <h2 style="margin-top: -100px">Non-admin users:</h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col"><h3>Name</h3></th>
-            <th scope="col"><h3>Surname</h3></th>
-            <th scope="col"><h3>username</h3></th>
-            <th scope="col" style="width: 200px;"><h3>Action</h3></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${users}">
-            <td><h3 th:text="${user.name}"></h3></td>
-            <td><h3 th:text="${user.surname}"></h3></td>
-            <td><h3 th:text="${user.username}"></h3></td>
+    <div th:if="${users.size() > 0}" class="row" style="padding: 10px">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col"><h3>Name</h3></th>
+                <th scope="col"><h3>Surname</h3></th>
+                <th scope="col"><h3>username</h3></th>
+                <th scope="col" style="width: 200px;"><h3>Action</h3></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td><h3 th:text="${user.name}"></h3></td>
+                <td><h3 th:text="${user.surname}"></h3></td>
+                <td><h3 th:text="${user.username}"></h3></td>
 
-            <td class="text-right">
-                <form th:action="@{'/make-admin/{username}'
+                <td class="text-right">
+                    <form th:action="@{'/make-admin/{username}'
                 (username=${user.username})}" th:method="POST">
-                    <input type="text" name="color" th:value="${user.username}" hidden>
-                    <button class="admin-btn" type="submit">Make admin</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                        <input type="text" name="color" th:value="${user.username}" hidden>
+                        <button class="admin-btn" type="submit">Make admin</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h2 th:if="${users.size() == 0}" class="row" style="padding: 10px">
+        Нема регистрирано обичен корисник
+    </h2>
+
     <h2>Admin users:</h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col"><h3>Name</h3></th>
-            <th scope="col"><h3>Surname</h3></th>
-            <th scope="col"><h3>username</h3></th>
-            <th scope="col" style="width: 200px;"><h3>Action</h3></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${admins}">
-            <td><h3 th:text="${user.name}"></h3></td>
-            <td><h3 th:text="${user.surname}"></h3></td>
-            <td><h3 th:text="${user.username}"></h3></td>
+    <div th:if="${admins.size() > 0}" class="row" style="padding: 10px">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col"><h3>Name</h3></th>
+                <th scope="col"><h3>Surname</h3></th>
+                <th scope="col"><h3>username</h3></th>
+                <th scope="col" style="width: 200px;"><h3>Action</h3></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${admins}">
+                <td><h3 th:text="${user.name}"></h3></td>
+                <td><h3 th:text="${user.surname}"></h3></td>
+                <td><h3 th:text="${user.username}"></h3></td>
 
-            <td class="text-right">
-                <form th:action="@{'/remove-admin/{username}'
+                <td class="text-right">
+                    <form th:action="@{'/remove-admin/{username}'
                 (username=${user.username})}" th:method="POST">
-                    <input type="text" name="color" th:value="${user.username}" hidden>
-                    <button class="admin-btn" type="submit">Remove admin</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/jsoncalendar}" th:method="get">Уреди настани</a>
+                        <input type="text" name="color" th:value="${user.username}" hidden>
+                        <button class="admin-btn" type="submit">Remove admin</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h2 th:if="${admins.size() == 0}" class="row" style="padding: 10px">
+        Нема админи
+    </h2>
+    <div id="formFooter">
+        <a href="/jsoncalendar">
+            <button class="center add-recipe">Уреди настани</button>
+        </a>
+    </div>
 </div>

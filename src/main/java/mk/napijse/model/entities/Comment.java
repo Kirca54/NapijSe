@@ -18,10 +18,10 @@ public class Comment {
 
     private Date datePosted;
 
-    @OneToOne
+    @ManyToOne
     private User commentUser;
 
-    @OneToOne
+    @ManyToOne
     private Recipe recipe;
 
     public Comment() {
