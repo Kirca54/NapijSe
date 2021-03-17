@@ -18,6 +18,7 @@ public interface UserService extends UserDetailsService {
     User getUserById(final String id) throws UserNotFoundException;
     List<User> findAllRegularUsers();
     List<User> findAllAdminUsers();
+    List<User> findAllSortedByUsername();
     User changeRole(String username, Role role);
     Optional<User> findByUsername(String username);
 }
