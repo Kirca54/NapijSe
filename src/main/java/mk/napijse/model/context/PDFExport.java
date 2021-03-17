@@ -37,23 +37,26 @@ public class PDFExport {
         cell.setPhrase(new Phrase("E-mail", font));
         table.addCell(cell);
 
-        cell.setPhrase(new Phrase("Full Name", font));
+        cell.setPhrase(new Phrase("Name", font));
+        table.addCell(cell);
+
+        cell.setPhrase(new Phrase("Surname", font));
         table.addCell(cell);
 
         cell.setPhrase(new Phrase("Role", font));
         table.addCell(cell);
 
-//        cell.setPhrase(new Phrase("Enabled", font));
-//        table.addCell(cell);
+
     }
 
     private void writeTableData(PdfPTable table) {
         for (User user : listUsers) {
-            table.addCell(String.valueOf(user.getUsername()));
+            table.addCell(user.getUsername());
             table.addCell(user.getEmail());
-            table.addCell(user.getName()+" "+user.getSurname());
+            table.addCell(user.getName());
+            table.addCell(user.getSurname());
             table.addCell(user.getRole().toString());
-            //table.addCell(String.valueOf(user.isEnabled()));
+
         }
     }
 
@@ -66,7 +69,7 @@ public class PDFExport {
         font.setSize(18);
         font.setColor(Color.BLUE);
 
-        Paragraph p = new Paragraph("List of Users", font);
+        Paragraph p = new Paragraph("Korisnici na NapijSe", font);
         p.setAlignment(Paragraph.ALIGN_CENTER);
 
         document.add(p);
