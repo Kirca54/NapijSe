@@ -13,6 +13,7 @@ import mk.napijse.service.UserService;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -142,6 +143,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<User> findAllAdminUsers() {
         return this.userRepository.findAllByRole(Role.ROLE_ADMIN);
+    }
+
+    @Override
+    public List<User> findAllSortedByUsername() {
+        return userRepository.findAll(Sort.by("username").ascending());
+
     }
 
     @Override
