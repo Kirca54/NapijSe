@@ -40,7 +40,6 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
         User user = this.authenticationService.login(username, password);
 
         if (!this.passwordEncoder.matches(password, user.getPassword())) {
-        //if (!password.equals(user.getPassword())){
             throw new BadCredentialsException("Password is incorrect!");
         }
         return new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());

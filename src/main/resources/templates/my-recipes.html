@@ -20,7 +20,7 @@
                 </h3>
             </div>
         </div>
-        <div class="row" style="padding: 10px">
+        <div th:if="${recipes.size() > 0}" class="row" style="padding: 10px">
             <div class="column" th:each="recipe : ${recipes}">
                 <div class="card">
                     <form th:action="@{'/recipes/info/{id}' (id=${recipe.id})}" th:method="GET">
@@ -49,7 +49,12 @@
 
                 </div>
             </div>
+        </div>
 
+        <div th:if="${recipes.size() == 0}" class="row" style="padding: 10px">
+            <h2>
+                Моментално немате креирано рецепт
+            </h2>
         </div>
 
         <a sec:authorize="isAuthenticated()" href="/add-new-recipe" th:method="GET" style="color: inherit">

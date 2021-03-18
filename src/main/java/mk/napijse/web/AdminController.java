@@ -1,5 +1,7 @@
 package mk.napijse.web;
 
+import com.lowagie.text.DocumentException;
+import mk.napijse.model.context.PDFExport;
 import mk.napijse.model.entities.User;
 import mk.napijse.model.enumerations.Role;
 import mk.napijse.model.exceptions.UserNotFoundException;
@@ -9,6 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -57,5 +64,24 @@ public class AdminController {
         }catch (UserNotFoundException exception){
             return "redirect:/admin-page?error="+exception.getMessage();
         }
+    }
+
+
+    @GetMapping("/users/export/pdf")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<User> listUsers = userService.findAllSortedByUsername();
+
+        PDFExport exporter = new PDFExport(listUsers);
+        exporter.export(response);
+
     }
 }
