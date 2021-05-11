@@ -15,7 +15,7 @@
         </div>
 
 
-        <form class="form-signin mt-xl-5" method="post" action="/recipes/search">
+        <form class="form-signin mt-xl-5" th:method="get" th:action="@{/recipes(size=6, page=1)}">
             <label for="recipeName" class="sr-only">Пребарај</label>
             <input type="text" id="recipeName" name="recipeName" class="fadeIn first login"
                    placeholder="Внеси име на рецепт" autofocus="">
@@ -30,7 +30,7 @@
             <button class="add-recipe" type="submit">Пребарај</button>
         </form>
         <div class="row" style="padding: 10px">
-            <div class="column" th:each="recipe : ${recipes}">
+            <div class="column" th:each="recipe : ${recipePage}">
                 <div class="card">
                     <form th:action="@{'/recipes/info/{id}' (id=${recipe.id})}" th:method="GET">
                         <button class="add-to-cart-btn" type="submit"
@@ -58,12 +58,25 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- TODO ova e delot kade sto gi pokazuva brojkite na stranite -->
+        <h2>Страни:</h2>
+        <div style="text-align: -webkit-center;">
+            <div th:if="${recipePage.totalPages > 0}" class="pagination"
+                 th:each="pageNumber : ${pageNumbers}">
 
+                <a th:href="@{/recipes(size=${recipePage.size}, page=${pageNumber},
+                                    recipeName=${recipeName}, categoryId=${categoryId})}"
+                   th:text=${pageNumber}
+                   th:class="${pageNumber==recipePage.number + 1} ? active"
+                   th:style="'color: white;font-size: xx-large;'"></a>
+
+            </div>
         </div>
 
         <a sec:authorize="isAuthenticated()" href="/add-new-recipe" th:method="GET" style="color: inherit">
             <button class="add-recipe">
-                    Додај нова рецепта
+                Додај нова рецепта
             </button>
         </a>
 

@@ -9,6 +9,9 @@ import mk.napijse.repository.CategoryRepository;
 import mk.napijse.repository.RecipeRepository;
 import mk.napijse.repository.UserRepository;
 import mk.napijse.service.RecipeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,12 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<Recipe> findAll() {
         return this.recipeRepository.findAll();
+    }
+
+    @Override
+    public Page<Recipe> findAllPaginated(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+        return this.recipeRepository.findAll(pageable);
     }
 
     @Override
@@ -95,20 +104,23 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> findAllByName(String name) {
-        return this.recipeRepository.findAllByNameContainingIgnoreCase(name);
+    public Page<Recipe> findAllByName(String name, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+        return this.recipeRepository.findAllByNameContainingIgnoreCase(name, pageable);
     }
 
     @Override
-    public List<Recipe> findAllByCategory(Long categoryId) {
+    public Page<Recipe> findAllByCategory(Long categoryId, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
-        return this.recipeRepository.findAllByCategory(category);
+        return this.recipeRepository.findAllByCategory(category, pageable);
     }
 
     @Override
-    public List<Recipe> findAllByNameAndCategory(String name, Long categoryId) {
+    public Page<Recipe> findAllByNameAndCategory(String name, Long categoryId,  int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
-        return this.recipeRepository.findAllByNameContainingIgnoreCaseAndCategory(name, category);
+        return this.recipeRepository.findAllByNameContainingIgnoreCaseAndCategory(name, category, pageable);
     }
 
     @Override

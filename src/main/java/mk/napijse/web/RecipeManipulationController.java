@@ -8,13 +8,20 @@ import mk.napijse.model.exceptions.RecipeNotFoundException;
 import mk.napijse.service.CategoryService;
 import mk.napijse.service.RecipeService;
 import mk.napijse.service.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class RecipeManipulationController {
@@ -32,16 +39,54 @@ public class RecipeManipulationController {
     }
 
     @GetMapping("/recipes")
-    public String listAllRecipes(@RequestParam(required = false) String error, Model model){
+    public String listAllRecipes(@RequestParam(required = false) String error,
+                                 @RequestParam("page") Optional<Integer> page,
+                                 @RequestParam("size") Optional<Integer> size,
+                                 @RequestParam(required = false) String recipeName,
+                                 @RequestParam(required = false) Long categoryId,
+                                 Model model){
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(6);
+        Page<Recipe> recipePage;
+        int totalPages;
+
+        List<Category> categories = this.categoryService.findAll();
+
+        try {
+            if (recipeName == null && categoryId == null) {
+                recipePage = this.recipeService.findAllPaginated(currentPage, pageSize);
+                totalPages = recipePage.getTotalPages();
+            } else if (recipeName != null && categoryId == null) {
+                recipePage = this.recipeService.findAllByName(recipeName, currentPage, pageSize);
+                totalPages = recipePage.getTotalPages();
+            } else if (recipeName == null && categoryId != null) {
+                recipePage = this.recipeService.findAllByCategory(categoryId, currentPage, pageSize);
+                totalPages = recipePage.getTotalPages();
+            } else {
+                recipePage = this.recipeService.findAllByNameAndCategory(recipeName, categoryId, currentPage, pageSize);
+                totalPages = recipePage.getTotalPages();
+            }
+        } catch (CategoryNotFoundException exception) {
+            return "redirect:/recipes?error=" + exception.getMessage();
+        }
+
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
-        List<Recipe> recipes = this.recipeService.findAll();
-        List<Category> categories = this.categoryService.findAll();
+
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("recipeName", recipeName);
 
         model.addAttribute("categories", categories);
-        model.addAttribute("recipes", recipes);
+        model.addAttribute("recipePage", recipePage);
 
         model.addAttribute("bodyContent", "recipes");
         return "master-template";

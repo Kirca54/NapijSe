@@ -328,10 +328,20 @@
         }
         .logo-login{
             position: relative;
-            width: 33%;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
             display: block;
-            margin: 50px auto 0;
+            max-width: 500px;
+            min-width: 346px;
+            margin: auto;
         }
+        .aligner{
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
         .table-striped{
             width: 80%;
             margin: 50px auto;
@@ -369,6 +379,9 @@
         .table-striped>tbody>tr:nth-child(even)>td,
         .table-striped>tbody>tr:nth-child(even)>th {
             background-color: #ffffff;
+        }
+        .pagination{
+            margin: 20px 10px;
         }
     </style>
 </head>

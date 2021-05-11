@@ -9,6 +9,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Properties;
+
 @SpringBootApplication
 public class NapijseApplication {
 
@@ -40,6 +42,15 @@ public class NapijseApplication {
         javaMailSender.setPort(this.port);
         javaMailSender.setUsername(this.username);
         javaMailSender.setPassword(this.password);
+
+        Properties javaMailProperties = new Properties();
+        javaMailProperties.put("mail.smtp.starttls.enable", "true");
+        javaMailProperties.put("mail.smtp.auth", "true");
+        javaMailProperties.put("mail.transport.protocol", "smtp");
+        javaMailProperties.put("mail.debug", "true");
+        javaMailProperties.put("mail.smtp.ssl.trust", "*");
+        javaMailSender.setJavaMailProperties(javaMailProperties);
+
         return javaMailSender;
     }
 }

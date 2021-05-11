@@ -1,34 +1,35 @@
 <div id="formContent" xmlns:th="http://www.thymeleaf.org">
     <!-- Tabs Titles -->
 
-    <!-- Icon -->
-    <div class="fadeIn first form-group">
-        <img class="logo-login" src="https://i.imgur.com/OuxCIKn.png"/>
-    </div>
-
     <div th:if="${error!=null}">
         <h3 th:text="${error}"></h3>
     </div>
 
-    <!-- Login Form -->
-    <form th:action="@{'/login/post'}" method="post">
-        <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
-        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
-        <input type="submit" class="fadeIn fourth" value="Log In">
-    </form>
+    <div class="row" style="min-height: 64vh; width: 80%; margin: 50px auto;">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <img class="logo-login" src="https://i.imgur.com/OuxCIKn.png"/>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"  style="margin: 30px auto">
+            <div class="aligner">
+                <form th:action="@{'/login/post'}" method="post">
+                    <input type="text" id="username" class="fadeIn second" name="username" placeholder="Корисничко име"><br>
+                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Лозинка"><br>
+                    <input type="submit" class="fadeIn fourth" value="Најава">
+                </form>
 
-    <form action="/signin/facebook" method="POST">
-        <input type="hidden" name="scope" value="public_profile" />
-        <input type="submit" value="Login using Facebook"/>
-    </form>
+                <form action="/signin/facebook" method="POST">
+                    <input type="hidden" name="scope" value="public_profile" />
+                    <input type="submit" value="Логирајте се преку Facebook"/>
+                </form>
 
-    <div>
-        <a href="/forgot-password"><button class="center add-recipe">Forgot password</button></a>
+                <div>
+                <button class="center" style="display: block"><a href="/forgot-password" style="color: white">Заборавена лозинка</a></button>
+                <button class="center" style="display: block"><a href="/register" style="color: white">Регистрирај се</a></button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Register -->
-    <div id="formFooter">
-        <a href="/register"><button class="center add-recipe">Register here</button></a>
-    </div>
 </div>
 

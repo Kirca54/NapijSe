@@ -17,6 +17,7 @@ public class Recipe {
 
     private String name;
 
+    @Column(length = 4000)
     private String description;
 
     private String ingredients;
